@@ -13,7 +13,7 @@ def qrscan(request,qrcode):
         qr_label = QrLabel.objects.get(qrcode = qrcode) 
         data_master = qr_label.data_master
         response = "<p>%s</p><p> 题目： %s</p><p> 描述：%s</p> <p>电话：%s</p> " % (qr_label.qrcode,data_master.title, data_master.describe,data_master.tel)
-    except OSError:
+    except:
         pass
 
     return HttpResponse(response)
