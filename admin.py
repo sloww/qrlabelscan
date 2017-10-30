@@ -1,3 +1,15 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import DataMaster,QrLabel
+
+class DataMasterAdmin(admin.ModelAdmin):
+    list_display = ('master_code','title' )
+    fields = ('master_code','title', 'describe', 'tel')
+
+class QrLabelAdmin(admin.ModelAdmin):
+    list_display = ('qrcode','data_master' )
+    fields = ('qrcode','data_master')
+
+admin.site.register(DataMaster,DataMasterAdmin)
+admin.site.register(QrLabel,QrLabelAdmin)
+
