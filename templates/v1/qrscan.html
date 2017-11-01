@@ -21,15 +21,21 @@
 <div class="weui-flex__item"><p>img</p></div>
 </div>
 <div class="weui-flex">
-<div class="weui-flex__item"><img src="{{data_master.img_url}}" /></div>
+<div class="weui-flex__item">
+
+<img style="max-width:100%;"  src="{{data_master.img_url}}"/></div>
+
 </div>
 <div class="weui-flex">
-<div class="weui-flex__item"><p>{{data_master.describe}}</p></div>
+<div class="weui-flex__item"><center><p>{{data_master.describe}}</p></center></div>
 </div>
 </div>
 <div class="page__ft">
 <div class="weui-msg__extra-area">
 <div class="weui-footer">
+<p class="weui-footer__links">
+<a href="javascript:void(0);" class="weui-footer__link">{{data_master.tel}}</a>
+</p>
 <p class="weui-footer__links">
 <a href="javascript:void(0);" class="weui-footer__link">{{data_master.title}}</a>
 </p>
