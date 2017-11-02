@@ -32,6 +32,10 @@ class QrLabel(models.Model):
 
     def scaned(self):
         sr =ScanRecord(qr_label=self,) 
+        sr.save()
+
+    def scaned_time(self):
+        return  ScanRecord.objects.filter(qr_label=self).count()
 
 class ScanRecord(models.Model):
     qr_label = models.ForeignKey(QrLabel, on_delete=models.CASCADE)

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-<title>身份二维码</title>
+<title>正品</title>
 <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css"/>
 </head>
 <body ontouchstart>
@@ -26,20 +26,35 @@
 <img style="max-width:100%;"  src="{{data_master.img_url}}"/></div>
 
 </div>
+<center>
+<h2>
+<div>查询结果</div>
+</h2>
+</center>
+
 <div class="weui-flex">
-<div class="weui-flex__item"><center><p>{{data_master.describe}}</p></center></div>
+    <div class="weui-flex__item">您查询的商品编号是：<a style="color:red">{{qr_label.qrcode}}</a></div>
+</div>
+
+<div class="weui-flex">
+    <div class="weui-flex__item">{{data_master.describe}} </div>
+</div>
+
+
+<div class="weui-flex">
+    <div class="weui-flex__item">查询次数：{{qr_label.scaned_time}} </div>
 </div>
 </div>
 <div class="page__ft">
-<div class="weui-msg__extra-area">
-<div class="weui-footer">
-<p class="weui-footer__links">
-<a href="javascript:void(0);" class="weui-footer__link">{{data_master.tel}}</a>
-</p>
-<p class="weui-footer__links">
-<a href="javascript:void(0);" class="weui-footer__link">{{data_master.title}}</a>
-</p>
-<p class="weui-footer__text">Copyright &copy; 2008-2016 tslink.cc</p>
+        <div class="weui-footer">
+            <p class="weui-footer__links">
+<a href=”tel://{{data_master.tel}} class="weui-footer__link" ”>{{data_master.tel}}</a>
+            </p>
+            <p class="weui-footer__links">
+                <a  class="weui-footer__link">{{data_master.title}}</a>
+            </p>
+            <p class="weui-footer__text">Copyright &copy; 2012-2018 tslink.cc</p>
+        </div>
 </div>
 </div>
 </div>
