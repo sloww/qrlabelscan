@@ -30,15 +30,20 @@ class QrLabel(models.Model):
     def __str__(self):
         return "%s ( %s )" % (self.qrcode, self.data_master.master_code)
 
-    def scaned(self):
-        sr =ScanRecord(qr_label=self,) 
+    def scaned(self,ip):
+        sr =ScanRecord(qr_label=self, ip=ip,) 
+        print(sr.ip)
         sr.save()
 
     def scaned_time(self):
         return  ScanRecord.objects.filter(qr_label=self).count()
 
+    def get_first_scan(self):
+        return ScanRecord.objects.filter(qr_label=self).order_by('scan_date').first()
+
 class ScanRecord(models.Model):
     qr_label = models.ForeignKey(QrLabel, on_delete=models.CASCADE)
+    ip=models.GenericIPAddressField()
     scan_date = models.DateTimeField(auto_now_add=True) 
 
     def __str__(self):
