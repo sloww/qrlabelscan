@@ -43,7 +43,7 @@ class QrLabel(models.Model):
 
 class ScanRecord(models.Model):
     qr_label = models.ForeignKey(QrLabel, on_delete=models.CASCADE)
-    ip=models.GenericIPAddressField()
+    ip = models.GenericIPAddressField()
     scan_date = models.DateTimeField(auto_now_add=True) 
 
     def __str__(self):

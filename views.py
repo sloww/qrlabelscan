@@ -1,7 +1,7 @@
 #coding:utf-8
 
 from django.http import HttpResponse
-from .models import QrLabel, DataMaster
+from .models import QrLabel, DataMaster,ScanRecord
 from django.shortcuts import render
 
 
@@ -16,13 +16,12 @@ def get_client_ip(request):
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
-def qrscan(request,qrcode):
+def qrscan(request, qrcode):
     response = "not exist"
     try:
         qr_label = QrLabel.objects.get(qrcode = qrcode) 
         print(qr_label.qrcode)
         qr_label.scaned(get_client_ip(request))
-        print(qr_label.get_first_scan())
         data_master = qr_label.data_master
         context = {'qr_label': qr_label,'data_master':data_master}
         
@@ -31,4 +30,19 @@ def qrscan(request,qrcode):
         pass
 
     return HttpResponse(response)
+
+def ipdetail(request, qrcode):
+    response = "not exist"
+    try:
+        qr_label = QrLabel.objects.get(qrcode = qrcode) 
+        qr_label.scaned(get_client_ip(request))
+        data_master = qr_label.data_master
+        scan_records = ScanRecord.objects.filter(qr_label = qr_label).order_by('-scan_date')
+        context = {'qr_label': qr_label,'data_master':data_master,'scan_records':scan_records}
+        return render(request, 'v1/ipdetail.html', context)
+    except:
+        pass
+
+    return HttpResponse(response)
+
 
