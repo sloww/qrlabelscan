@@ -46,13 +46,23 @@
 </div>
 
 <hr />
-<form  method="post">
+<form  method="post" enctype="multipart/form-data">
         {% csrf_token %}
 <div class="weui-cells__title">单位名称</div>
         <div class="weui-cells">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
                     <input name="title" class="weui-input" type="text" placeholder="请输入文本" value = "{{ data_master.title }}" />
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="weui-cells__title">上传图片</div>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <input name="myfile" class="weui-input" type="file" placeholder="请输入图片" />
                 </div>
             </div>
         </div>
