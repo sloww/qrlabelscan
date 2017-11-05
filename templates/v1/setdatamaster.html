@@ -6,14 +6,79 @@
 
 {% block body %}
 
-<p>{{ rlt }}</p>
+<div class="page__hd">
+<div class="weui-tab">
+<div class="weui-navbar">
+<div class="weui-navbar__item weui-bar__item_on">
+{{data_master.title}}
 
+</div>
+</div>
+</div>
+<div class="page__bd page__bd_spacing">
+<div class="weui-flex">
+<div class="weui-flex__item"><p>img</p></div>
+</div>
+<div class="weui-flex">
+<div class="weui-flex__item">
+
+<img style="max-width:100%;"  src="{{data_master.img_url}}"/></div>
+
+</div>
+<div style="padding-left:10px;padding-right:10px;">
+<center>
+<h2>
+<div>查询结果</div>
+</h2>
+</center>
+
+<div  style="padding-top:15px">
+<div class="weui-flex">
+    <div class="weui-flex__item">您查询的产品编号是：<a style="color:red; ">0000000000000000</a></div>
+</div>
+
+<div class="weui-flex">
+    <div class="weui-flex__item" >{{data_master.describe}}</a> </div>
+</div>
+</div>
+<div  style="padding-top:15px">
+</div>
+</div>
+
+<hr />
 <form  method="post">
         {% csrf_token %}
-        <input type="text" name="title">
-        <input type="text" name="describe">
-        <input type="text" name="tel">
-        <input type="submit" value="Submit">
+<div class="weui-cells__title">单位名称</div>
+        <div class="weui-cells">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <input name="title" class="weui-input" type="text" placeholder="请输入文本" value = "{{ data_master.title }}" />
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="weui-cells__title">正确后的描述文字</div>
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <textarea class="weui-textarea" placeholder="请输入文本" rows="3" name="describe">{{data_master.describe}}</textarea>
+                    <div class="weui-textarea-counter"><span>0</span>/200</div>
+                </div>
+            </div>
+        </div>
+<div class="weui-cell weui-cell_vcode">
+                <div class="weui-cell__hd">
+                    <label class="weui-label">电话</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <input name="tel" class="weui-input" type="tel" placeholder="请输入手机号"  value = "{{ data_master.tel }}" />
+                </div>
+            </div>
+
+</div>
+<div class="weui-btn-area">
+         <input type="submit" value="提交" class="weui-btn weui-btn_primary">        </div>
 </form>
  
 

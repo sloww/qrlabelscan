@@ -49,12 +49,19 @@ def ipdetail(request, qrcode):
 
 def setdatamaster(request,master_code):
     response = "not exist"
-    ctx ={}
-    if request.POST:
-        ctx['rlt'] = request.POST['title']
-    else:
+    try:
+        data_master =  DataMaster.objects.get(master_code = master_code)
+        if request.POST:
+            data_master.title = request.POST['title']
+            data_master.describe = request.POST['describe']
+            data_master.tel = request.POST['tel']
+            data_master.save()
+        else:
+            pass
+        ctx = {'data_master':data_master,}
+        print("ok63")
+        return render(request, "v1/setdatamaster.html", ctx)
+    except:
         pass
-    print('num 57')
-    print(ctx)
-    return render(request, "v1/setdatamaster.html", ctx)
+    return HttpResponse(response)
 
