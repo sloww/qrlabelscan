@@ -6,7 +6,14 @@
 
 {% block body %}
 
-<div class="page__hd">
+<center>
+<h1>
+<div>预览</div>
+</h1>
+</center>
+
+
+<div class="page__hd" style="border-style: solid; border-width:1px;">
 <div class="weui-tab">
 <div class="weui-navbar">
 <div class="weui-navbar__item weui-bar__item_on">
@@ -37,15 +44,26 @@
     <div class="weui-flex__item">您查询的产品编号是：<a style="color:red; ">0000000000000000</a></div>
 </div>
 
-<div class="weui-flex">
-    <div class="weui-flex__item" >{{data_master.describe}}</a> </div>
+<div>
+    <div>{{data_master.describe}}</div>
 </div>
+
+
 </div>
-<div  style="padding-top:15px">
 </div>
 </div>
 
-<hr />
+</div>
+<center>
+<h1>
+<div>设定</div>
+</h1>
+</center>
+
+
+<div class="page__hd" style="border-style: solid; border-width:1px;">
+<div  style="padding-top:15px">
+
 <form  method="post" enctype="multipart/form-data">
         {% csrf_token %}
 <div class="weui-cells__title">单位名称</div>
@@ -66,14 +84,12 @@
                 </div>
             </div>
         </div>
-</div>
 
 <div class="weui-cells__title">正确后的描述文字</div>
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入文本" rows="3" name="describe">{{data_master.describe}}</textarea>
-                    <div class="weui-textarea-counter"><span>0</span>/200</div>
+                    <textarea class="weui-textarea" placeholder="请输入文本" rows="5" name="describe">{{data_master.describe}}</textarea>
                 </div>
             </div>
         </div>
@@ -86,10 +102,10 @@
                 </div>
             </div>
 
-</div>
 <div class="weui-btn-area">
          <input type="submit" value="提交" class="weui-btn weui-btn_primary">        </div>
 </form>
- 
+</div> 
+</div>
 
 {% endblock %}

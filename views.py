@@ -58,7 +58,6 @@ def setdatamaster(request,master_code):
             data_master.tel = request.POST['tel']
             try:
                 if request.FILES['img']:
-                    print('o60')
                     myfile = request.FILES['img']
                     fs = FileSystemStorage()
                     filename = fs.save(myfile.name, myfile)
