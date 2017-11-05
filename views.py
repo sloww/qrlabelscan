@@ -50,17 +50,14 @@ def ipdetail(request, qrcode):
 
 def setdatamaster(request,master_code):
     response = "not exist"
-    print('53')
     try:
         data_master =  DataMaster.objects.get(master_code = master_code)
-        print('55')
         if request.POST:
             data_master.title = request.POST['title']
             data_master.describe = request.POST['describe']
             data_master.tel = request.POST['tel']
-            print('59')
-            if request.FILES['myfile']:
-                myfile = request.FILES['myfile']
+            if request.FILES['img']:
+                myfile = request.FILES['img']
                 fs = FileSystemStorage()
                 filename = fs.save(myfile.name, myfile)
                 data_master.img_url = fs.url(filename)
