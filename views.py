@@ -3,6 +3,7 @@
 from django.http import HttpResponse
 from .models import QrLabel, DataMaster,ScanRecord
 from django.shortcuts import render
+from django.views.decorators import csrf
 
 
 def get_client_ip(request):
@@ -24,7 +25,8 @@ def qrscan(request, qrcode):
         qr_label.scaned(get_client_ip(request))
         data_master = qr_label.data_master
         context = {'qr_label': qr_label,'data_master':data_master}
-        
+        print('ok1')        
+        print(context)
         return render(request, 'v1/qrscan.html', context)
     except:
         pass
@@ -45,4 +47,14 @@ def ipdetail(request, qrcode):
 
     return HttpResponse(response)
 
+def setdatamaster(request,master_code):
+    response = "not exist"
+    ctx ={}
+    if request.POST:
+        ctx['rlt'] = request.POST['title']
+    else:
+        pass
+    print('num 57')
+    print(ctx)
+    return render(request, "v1/setdatamaster.html", ctx)
 

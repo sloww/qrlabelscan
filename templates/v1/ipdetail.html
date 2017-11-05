@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="zh-cmn-Hans">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-<title>
+{% extends 'v1/base.html' %}
+
+
+{% block title %}
 {{data_master.title}}
-</title>
-<link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css"/>
-</head>
-<body ontouchstart>
+{% endblock %}
 
-<div class="page">
-
+{% block body %}
 <center>
 <h2>
 <div>查询明细</div>
@@ -30,18 +24,4 @@
 </div>
 
 </div>
-<div class="page__ft" style="padding-top:40px">
-        <div class="weui-footer">
-            <p class="weui-footer__links">
-<a href="tel://{{data_master.tel}}" class="weui-footer__link" ”>{{data_master.tel}}</a>
-            </p>
-            <p class="weui-footer__links">
-                <a  class="weui-footer__link">{{data_master.title}}</a>
-            </p>
-            <p class="weui-footer__text">Copyright &copy; 2012-2018 tslink.cc</p>
-        </div>
-</div>
-</div>
-</div>
-</body>
-</html>
+{% endblock %}

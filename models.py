@@ -48,3 +48,5 @@ class ScanRecord(models.Model):
 
     def __str__(self):
         return "%s ( %s )" % (self.scan_date, self.qr_label.qrcode)
+
+
