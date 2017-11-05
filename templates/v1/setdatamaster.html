@@ -21,7 +21,7 @@
 </div>
 </div>
 </div>
-<div class="page__bd page__bd_spacing" style="margin-top:50px">
+<div class="page__bd page__bd_spacing" style="margin-top:35px">
 <div class="weui-flex">
 <div class="weui-flex__item">
 
@@ -44,6 +44,26 @@
     <div>{{data_master.describe}}</div>
 </div>
 
+<div  style="padding-top:15px">
+<div class="weui-flex">
+    <div class="weui-flex__item">查询次数：<a style="color:red">0</a> </div>
+</div>
+<div class="weui-flex">
+    <div class="weui-flex__item">首查时间：</div>
+</div>
+</div>
+
+    <div class="page__ft" style="padding-top:40px">
+        <div class="weui-footer">
+            <p class="weui-footer__links">
+<a href="tel://{{data_master.tel}}" class="weui-footer__link" ”>{{data_master.tel}}</a>
+            </p>
+            <p class="weui-footer__links">
+                <a  class="weui-footer__link">{{data_master.title}}</a>
+            </p>
+            <p class="weui-footer__text">Copyright &copy; 2012-2018 tslink.cc</p>
+        </div>
+    </div>
 
 </div>
 </div>
@@ -94,11 +114,11 @@
                     <label class="weui-label">电话</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <input name="tel" class="weui-input" type="tel" placeholder="请输入手机号"  value = "{{ data_master.tel }}" />
+                    <input name="tel" class="weui-input" type="text" placeholder="请输入电话号码"  value = "{{ data_master.tel }}" />
                 </div>
             </div>
 
-<div class="weui-btn-area">
+<div class="weui-btn-area" style="padding-top:20px">
          <input type="submit" value="提交" class="weui-btn weui-btn_primary">        </div>
 </form>
 </div> 
