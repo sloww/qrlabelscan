@@ -56,12 +56,16 @@ def setdatamaster(request,master_code):
             data_master.title = request.POST['title']
             data_master.describe = request.POST['describe']
             data_master.tel = request.POST['tel']
-            if request.FILES['img']:
-                myfile = request.FILES['img']
-                fs = FileSystemStorage()
-                filename = fs.save(myfile.name, myfile)
-                data_master.img_url = fs.url(filename)
-                print(data_master.img_url)
+            try:
+                if request.FILES['img']:
+                    print('o60')
+                    myfile = request.FILES['img']
+                    fs = FileSystemStorage()
+                    filename = fs.save(myfile.name, myfile)
+                    data_master.img_url = fs.url(filename)
+                    print(data_master.img_url)
+            except:
+                pass
             data_master.save()
         else:
             pass
