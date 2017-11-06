@@ -6,7 +6,6 @@ from django.shortcuts import render
 from django.views.decorators import csrf
 from django.core.files.storage import FileSystemStorage
 
-
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -18,10 +17,10 @@ def get_client_ip(request):
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
-def qrscan(request, qrcode):
+def qrscan(request, uuid):
     response = "not exist"
     try:
-        qr_label = QrLabel.objects.get(qrcode = qrcode) 
+        qr_label = QrLabel.objects.get(label_uuid = uuid) 
         print(qr_label.qrcode)
         qr_label.scaned(get_client_ip(request))
         data_master = qr_label.data_master
@@ -34,10 +33,10 @@ def qrscan(request, qrcode):
 
     return HttpResponse(response)
 
-def ipdetail(request, qrcode):
+def ipdetail(request, uuid):
     response = "not exist"
     try:
-        qr_label = QrLabel.objects.get(qrcode = qrcode) 
+        qr_label = QrLabel.objects.get(label_uuid = uuid) 
         qr_label.scaned(get_client_ip(request))
         data_master = qr_label.data_master
         scan_records = ScanRecord.objects.filter(qr_label = qr_label).order_by('-scan_date')
@@ -48,10 +47,10 @@ def ipdetail(request, qrcode):
 
     return HttpResponse(response)
 
-def setdatamaster(request,master_code):
+def setdatamaster(request,uuid):
     response = "not exist"
     try:
-        data_master =  DataMaster.objects.get(master_code = master_code)
+        data_master =  DataMaster.objects.get(master_uuid = uuid)
         if request.POST:
             data_master.title = request.POST['title']
             data_master.describe = request.POST['describe']

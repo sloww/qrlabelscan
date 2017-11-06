@@ -4,6 +4,11 @@ from django.db import models
 import uuid
 
 class DataMaster(models.Model):
+    master_uuid =models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
+        )
     title = models.CharField(max_length=200)
     img_url = models.URLField(max_length=200)
     master_code = models.CharField(
@@ -20,6 +25,11 @@ class DataMaster(models.Model):
 class QrLabel(models.Model):
     data_master = models.ForeignKey(DataMaster,
         on_delete=models.CASCADE,
+        )
+    label_uuid =models.CharField(
+        max_length=200,
+        unique=True,
+        null=False,
         )
     qrcode = models.CharField(
         max_length=200,

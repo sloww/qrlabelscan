@@ -1,7 +1,7 @@
 {% extends 'v1/base.html' %}
 
 {% block title %}
-设定模版
+{{data_master.title}}
 {% endblock %}
 
 {% block body %}
@@ -14,6 +14,7 @@
 
 
 <div class="page__hd" style="border-style: solid; border-width:1px;margin-left:1px;margin-right:1px">
+<!--
 <div class="weui-tab">
 <div class="weui-navbar">
 <div class="weui-navbar__item weui-bar__item_on">
@@ -21,8 +22,18 @@
 </div>
 </div>
 </div>
-<div class="page__bd page__bd_spacing" style="margin-top:35px">
+-->
+<div class="page__bd page__bd_spacing" style="margin-top:0px">
+<!--
 <div class="weui-flex">
+<div class="weui-flex__item">
+
+<h3 style="algin:center" >{{data_master.title}}</h3>
+ </div>
+
+</div>
+-->
+
 <div class="weui-flex__item">
 
 <img style="max-width:100%;"  src="{{data_master.img_url}}"/></div>
@@ -35,7 +46,7 @@
 </h2>
 </center>
 
-<div  style="padding-top:15px">
+<div>
 <div class="weui-flex">
     <div class="weui-flex__item">您查询的产品编号是：<a style="color:red; ">0000000000000000</a></div>
 </div>

@@ -4,7 +4,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^(?P<qrcode>\d{16})/$', views.qrscan, name='qrscan'),
-    url(r'^(?P<qrcode>\d{16})/ipdetail$', views.ipdetail, name='ipdetal'),
-    url(r'^(?P<master_code>\d{12})/sdm$', views.setdatamaster, name='setdatamaster'),
+    url(r'^(?P<uuid>[0-9A-Fa-f-]+)/$', views.qrscan, name='qrscan'),
+    url(r'^(?P<uuid>[0-9A-Fa-f-]+)/ipdetail$', views.ipdetail, name='ipdetal'),
+    url(r'^(?P<uuid>[0-9A-Fa-f-]+)/sdm$', views.setdatamaster, name='setdatamaster'),
 ]
