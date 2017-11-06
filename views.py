@@ -5,6 +5,7 @@ from .models import QrLabel, DataMaster,ScanRecord
 from django.shortcuts import render
 from django.views.decorators import csrf
 from django.core.files.storage import FileSystemStorage
+import uuid
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -73,4 +74,43 @@ def setdatamaster(request,uuid):
     except:
         pass
     return HttpResponse(response)
+
+
+def getlabel(request, m_code,num):
+    try:
+        name_space = uuid.NAMESPACE_DNS
+        master_code = m_code
+        master_uuid = str(uuid.uuid5(name_space,str(master_code)))
+        title = "公司名称"
+        describe = "您查询的是正品，请放心使用。有任何技术问题，可拨打 021-50687572 或加 QQ群 590646661 进行咨询！"
+        tel = "021-50687572"
+        img_url = "http://tslink-cc.oss-cn-hangzhou.aliyuncs.com/pub/noimage.png"
+        md = DataMaster(master_uuid = master_uuid,
+        master_code = master_code,
+        title = title,
+        describe = describe,
+        tel = tel,
+        img_url = img_url,
+        ) 
+        md.save() 
+        print(len(num))
+        print(10**len(num))
+        print("----------")
+        qrcode_base = int(master_code)* (10**len(num))
+        print(qrcode_base)
+        for x in range(0, int(num)):
+            qrcode = qrcode_base + x
+            label_uuid = str(uuid.uuid5(name_space,str(qrcode)))
+            qrlabel = QrLabel(data_master = md,
+                qrcode = str(qrcode),
+                label_uuid = label_uuid,
+                )
+            qrlabel.save()
+        print("ok105")
+        context = {'qr_labels': QrLabel.objects.filter(data_master = md).order_by("qrcode"),'data_master':md,}
+        return render(request, 'v1/label_list.html', context)
+    except:
+        return HttpResponse("404")
+
+
 
