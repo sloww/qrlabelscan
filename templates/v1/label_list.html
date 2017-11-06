@@ -1,0 +1,6 @@
+{{ data_master.master_uuid }}, {{data_master.master_code }}
+<br>
+{% for label in qr_labels %}
+{{label.label_uuid}}, {{label.qrcode}}
+<br>
+{% endfor %}
