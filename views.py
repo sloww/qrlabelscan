@@ -6,6 +6,11 @@ from django.shortcuts import render
 from django.views.decorators import csrf
 from django.core.files.storage import FileSystemStorage
 import uuid
+from django.contrib.admin.views.decorators import staff_member_required
+import json
+from django.http import StreamingHttpResponse
+import requests
+import time
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -75,8 +80,8 @@ def setdatamaster(request,uuid):
         pass
     return HttpResponse(response)
 
-
-def getlabel(request, m_code,num):
+@staff_member_required
+def getlabel(request, m_code, num):
     try:
         name_space = uuid.NAMESPACE_DNS
         master_code = m_code
@@ -107,10 +112,22 @@ def getlabel(request, m_code,num):
                 )
             qrlabel.save()
         print("ok105")
-        context = {'qr_labels': QrLabel.objects.filter(data_master = md).order_by("qrcode"),'data_master':md,}
+        context = {'qr_labels': QrLabel.objects.filter(data_master = md).order_by("qrcode"),
+            'data_master':md,}
         return render(request, 'v1/label_list.html', context)
     except:
         return HttpResponse("404")
 
+class JSONObject:
+    def __init__(self, d):
+        self.__dict__ = d
 
+@staff_member_required
+def getip(request):
+    scan_records = ScanRecord.objects.all() 
+    for sr in scan_records:
+        sr.json = requests.get("http://ip.taobao.com/service/getIpInfo.php?ip="+str(sr.ip)).text
+        sr.city = json.loads(sr.json, object_hook=JSONObject).data.city
+        sr.save()
+    return HttpResponse("ok")
 

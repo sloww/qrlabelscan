@@ -13,15 +13,17 @@
 <p>{{qr_label.qrcode}}</p>
 </center>
 
-<div  style="padding-top:15px">
+<div  style="padding-top:15px;padding-left:10px;">
+    <div class="page__bd page__bd_spacing">
 {% for scan_record in scan_records %}
 <div class="weui-flex">
-    <div class="weui-flex__item">{{forloop.counter}}  {{scan_record.ip}}</div>
-    <div class="weui-flex__item">{{scan_record.scan_date}}</div>
+    <div style="width:10%">{{forloop.counter}} </div>
+    <div style="padding-left:0px;width:20%"> {{scan_record.city | default:"更新中"}}</div>
+    <div style="padding-left:0px" class="weui-flex__item">{{scan_record.scan_date}}</div>
 </div>
 {% endfor %}
 
 </div>
-
+</div>
 </div>
 {% endblock %}
