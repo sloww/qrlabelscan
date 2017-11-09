@@ -40,7 +40,6 @@ def ipdetail(request, uuid):
     response = "not exist"
     try:
         qr_label = QrLabel.objects.get(label_uuid = uuid) 
-        qr_label.scaned(get_client_ip(request))
         data_master = qr_label.data_master
         scan_records = ScanRecord.objects.filter(qr_label = qr_label).order_by('-scan_date')
         context = {'qr_label': qr_label,'data_master':data_master,'scan_records':scan_records}
