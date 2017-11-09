@@ -55,6 +55,9 @@ class DataMaster(models.Model):
         verbose_name = "模版"
         verbose_name_plural = '模版'
 
+    def label_count(self):
+        return  QrLabel.objects.filter(data_master=self).count()
+
 class QrLabel(models.Model):
     data_master = models.ForeignKey(DataMaster,
         on_delete=models.CASCADE,
@@ -91,7 +94,7 @@ class QrLabel(models.Model):
             sr.city = sr.json[0]
         sr.save()
 
-    def scaned_time(self):
+    def scaned_times(self):
         return  ScanRecord.objects.filter(qr_label=self).count()
 
     def get_first_scan(self):

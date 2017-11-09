@@ -3,17 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+
 <title>{% block title %}太码系统{% endblock %}</title>
 
 <link rel="stylesheet" href="https://cdn.bootcss.com/weui/1.1.2/style/weui.min.css"/>
+<link rel="stylesheet" href="/static/css/my.css"/>
 </head>
 <body ontouchstart>
+
 <div class="page">
-{% block body %}block {% endblock %}
+
+    {% block body %}block {% endblock %}
+
     <div class="page__ft" style="padding-top:40px">
         <div class="weui-footer">
             <p class="weui-footer__links">
-<a href="tel://{{data_master.tel}}" class="weui-footer__link" ”>{{data_master.tel}}</a>
+                <a href="tel://{{data_master.tel}}" class="weui-footer__link" ”>{{data_master.tel}}</a>
             </p>
             <p class="weui-footer__links">
                 <a  class="weui-footer__link">{{data_master.title}}</a>
@@ -21,6 +26,7 @@
             <p class="weui-footer__text">Copyright &copy; 2012-2018 tslink.cc</p>
         </div>
     </div>
+
 </div>
 </body>
 </html>

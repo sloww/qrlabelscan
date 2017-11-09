@@ -1,0 +1,45 @@
+{% extends 'v1/base.html' %}
+
+
+{% block title %}
+{{data_master.title}}
+{% endblock %}
+
+{% block body %}
+
+    <div class="page__hd">
+        <h2 class="page__title">查询明细</h2>
+        <p class="page__desc">管理码 {{data_master.master_code}}</p>
+    </div>
+<!--
+    <div class="page__bd">
+        <div class="weui-cells__title"> 共 {{scan_records.count}} 条记录</div>
+            {% for scan_record in scan_records %}
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                <p>{{scan_record.city | default:"更新中"}}</p>
+                </div>
+                <div class="weui-cell__ft">{{scan_record.scan_date|date:'Y-m-d H:i'}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+-->
+
+    <div class="page__bd">
+        <div class="weui-cells__title"> 共 {{qrlabels.count}} 枚粘贴码</div>
+            {% for l in qrlabels %}
+                {% if l.scaned_times %}
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                <p>{{ l.label_code }}</p>
+                </div>
+                <div class="weui-cell__ft">被查询{{l.scaned_times|default:0}}次</div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
