@@ -85,7 +85,6 @@ def get_datamaster_list(request):
         con = con + 'http://tslink.cn/v1/%s/setdm/,%s <br>' % (dm.master_uuid, dm.master_code,)  
     return HttpResponse(con) 
 
-@staff_member_required
 
 def get_datamaster_detail(request, uuid):
     dm = DataMaster.objects.get(master_uuid=uuid)
