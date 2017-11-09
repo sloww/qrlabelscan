@@ -2,25 +2,58 @@
 
 from django.db import models
 import uuid
+from qqwry import QQwry
+
+class LabelRecord(models.Model):
+    master_code = models.IntegerField(
+        verbose_name="管理码编号",
+        default=1,
+        )
+    label_code = models.IntegerField(
+        verbose_name="粘贴码序号",
+        default=1,
+        )
+
+    class Meta():
+        verbose_name = "申请记录"
+        verbose_name_plural = '申请记录'
 
 class DataMaster(models.Model):
     master_uuid =models.CharField(
         max_length=200,
         unique=True,
         null=False,
+        verbose_name="管理码",
         )
-    title = models.CharField(max_length=200)
-    img_url = models.URLField(max_length=200)
     master_code = models.CharField(
         max_length=200,
         unique=True,
         null=False,
+        verbose_name="管理码编号",
         )
-    describe = models.CharField(max_length=900)
-    tel = models.CharField(max_length=200)
+    title = models.CharField(max_length=200,
+        verbose_name="单位名称")
+    remark = models.CharField(max_length=200,
+        default="",
+        verbose_name="备注",)
+    distributor = models.CharField(max_length=200,
+        default="",
+        verbose_name="经销商",)
+    img_url = models.URLField(max_length=200,
+        verbose_name="主图地址",
+        )
+    describe = models.TextField(max_length=900,
+        verbose_name="文字描述",)
+
+    tel = models.CharField(max_length=200,
+        verbose_name="电话",)
 
     def __str__(self):
         return "%s ( %s )" % (self.master_code,self.title)
+
+    class Meta():
+        verbose_name = "模版"
+        verbose_name_plural = '模版'
 
 class QrLabel(models.Model):
     data_master = models.ForeignKey(DataMaster,
@@ -30,19 +63,32 @@ class QrLabel(models.Model):
         max_length=200,
         unique=True,
         null=False,
+        verbose_name="粘贴码",
+        )
+    label_code = models.CharField(
+        max_length=200,
+        verbose_name="粘贴码序号",
         )
     qrcode = models.CharField(
         max_length=200,
         unique=True,
         null=False,
+        verbose_name="粘贴码编号",
         )
 
     def __str__(self):
         return "%s ( %s )" % (self.qrcode, self.data_master.master_code)
 
+    class Meta():
+        verbose_name = "标签"
+        verbose_name_plural = '标签'
+
     def scaned(self,ip):
         sr =ScanRecord(qr_label=self, ip=ip,) 
-        print(sr.ip)
+        q = QQwry()
+        if q.load_file('qqwry.dat'):
+            sr.json = q.lookup(str(ip))
+            sr.city = sr.json[0]
         sr.save()
 
     def scaned_time(self):
@@ -53,12 +99,21 @@ class QrLabel(models.Model):
 
 class ScanRecord(models.Model):
     qr_label = models.ForeignKey(QrLabel, on_delete=models.CASCADE)
-    ip = models.GenericIPAddressField()
-    json = models.CharField(max_length=900, default="")
-    city = models.CharField(max_length=200, default="")
-    scan_date = models.DateTimeField(auto_now_add=True) 
+    ip = models.GenericIPAddressField(
+        verbose_name="IP地址",)
+    json = models.CharField(max_length=900,
+         default="")
+    city = models.CharField(max_length=200,
+        verbose_name="城市",
+        default="")
+    scan_date = models.DateTimeField(auto_now_add=True,
+        verbose_name="扫描时间",
+        ) 
 
     def __str__(self):
         return "%s ( %s )" % (self.scan_date, self.qr_label.qrcode)
 
+    class Meta():
+        verbose_name = "扫码记录"
+        verbose_name_plural = '扫码记录'
 
