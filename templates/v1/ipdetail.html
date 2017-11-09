@@ -6,24 +6,23 @@
 {% endblock %}
 
 {% block body %}
-<center>
-<h2>
-<div>查询明细</div>
-</h2>
-<p>{{qr_label.qrcode}}</p>
-</center>
 
-<div  style="padding-top:15px;padding-left:10px;">
-    <div class="page__bd page__bd_spacing">
-{% for scan_record in scan_records %}
-<div class="weui-flex">
-    <div style="width:10%">{{forloop.counter}} </div>
-    <div style="padding-left:5px;padding-right:5px">{{scan_record.city | default:"更新中"}}</div>
-    <div style="padding-left:0px" class="weui-flex__item">{{scan_record.scan_date|date:'Y-m-d H:i'}}</div>
-</div>
-{% endfor %}
+    <div class="page__hd">
+        <h1 class="page__title">查询明细</h1>
+        <p class="page__desc">{{qr_label.qrcode}}</p>
+    </div>
 
-</div>
-</div>
-</div>
+    <div class="page__bd">
+        <div class="weui-cells__title"> 共 {{scan_records.count}} 条记录</div>
+            {% for scan_record in scan_records %}
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                <p>{{scan_record.city | default:"更新中"}}</p>
+                </div>
+                <div class="weui-cell__ft">{{scan_record.scan_date|date:'Y-m-d H:i'}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}
