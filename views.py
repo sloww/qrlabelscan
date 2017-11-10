@@ -11,6 +11,8 @@ from django.http import StreamingHttpResponse
 from qqwry import QQwry
 import time
 
+URLPRE = "http://tslink.cc/a/"
+
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
@@ -78,11 +80,23 @@ def set_data_master(request,uuid):
 
 @staff_member_required
 
+def get_label_list(request, master_code):
+    dm = DataMaster.objects.get(master_code = master_code)
+    con=""
+    if dm:
+        labels = QrLabel.objects.filter(data_master = dm).order_by('-label_code')
+        for label in labels:
+            con = con + URLPRE + '%s/,%s,%s<br>' % (label.label_uuid,dm.master_code,label.label_code)
+    return HttpResponse(con) 
+
+
+@staff_member_required
+
 def get_datamaster_list(request):
     dms = DataMaster.objects.order_by('master_code')
     con=""
     for dm in dms:
-        con = con + 'http://tslink.cn/v1/%s/setdm/,%s <br>' % (dm.master_uuid, dm.master_code,)  
+        con = con + URLPRE + '%s/setdm/,%s <br>' % (dm.master_uuid, dm.master_code,)  
     return HttpResponse(con) 
 
 
@@ -113,7 +127,7 @@ def get_new_labels(request,num):
         title = "公司名称"
         describe = "您查询的是正品，请放心使用。有任何技术问题，可拨打 021-50687572 或加 QQ群 590646661 进行咨询！"
         tel = "021-50687572"
-        img_url = "http://tslink-cc.oss-cn-hangzhou.aliyuncs.com/pub/noimage.png"
+        img_url = "http://g-cc.oss-cn-hangzhou.aliyuncs.com/pub/noimage.png"
         md = DataMaster(master_uuid = master_uuid,
             master_code = master_code,
             title = title,
@@ -138,5 +152,3 @@ def get_new_labels(request,num):
         return render(request, 'v1/get-new-labels.html', context)
     except:
         return HttpResponse("404")
-
-
