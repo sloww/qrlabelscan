@@ -19,6 +19,7 @@ class LabelRecord(models.Model):
         verbose_name_plural = '申请记录'
 
 class DataMaster(models.Model):
+
     master_uuid =models.CharField(
         max_length=200,
         unique=True,
@@ -31,22 +32,41 @@ class DataMaster(models.Model):
         null=False,
         verbose_name="管理码编号",
         )
+
     title = models.CharField(max_length=200,
-        verbose_name="单位名称")
+        verbose_name="单位名称",
+        )
+    title_show = models.BooleanField(default = False,
+        verbose_name = '是否显示题目',
+        )
+
     remark = models.CharField(max_length=200,
         default="",
-        verbose_name="备注",)
+        verbose_name="备注",
+        )
     distributor = models.CharField(max_length=200,
         default="",
-        verbose_name="经销商",)
+        verbose_name="经销商",
+        )
+
     img_url = models.URLField(max_length=200,
         verbose_name="主图地址",
         )
+    img_show = models.BooleanField(default = False,
+        verbose_name = '是否显示主图',
+        )
+
     describe = models.TextField(max_length=900,
-        verbose_name="文字描述",)
+        verbose_name="文字描述",
+        )
+
+    scan_show = models.BooleanField(default = False,
+        verbose_name = '是否显示扫描结果',
+        )
 
     tel = models.CharField(max_length=200,
-        verbose_name="电话",)
+        verbose_name="电话",
+        )
 
     def __str__(self):
         return "%s ( %s )" % (self.master_code,self.title)
@@ -103,12 +123,15 @@ class QrLabel(models.Model):
 class ScanRecord(models.Model):
     qr_label = models.ForeignKey(QrLabel, on_delete=models.CASCADE)
     ip = models.GenericIPAddressField(
-        verbose_name="IP地址",)
+        verbose_name="IP地址",
+        )
     json = models.CharField(max_length=900,
-         default="")
+         default="",
+         )
     city = models.CharField(max_length=200,
         verbose_name="城市",
-        default="")
+        default="",
+        )
     scan_date = models.DateTimeField(auto_now_add=True,
         verbose_name="扫描时间",
         ) 

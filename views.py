@@ -56,9 +56,22 @@ def set_data_master(request,uuid):
     try:
         data_master =  DataMaster.objects.get(master_uuid = uuid)
         if request.POST:
+            print(request.POST)
             data_master.title = request.POST['title']
             data_master.describe = request.POST['describe']
             data_master.tel = request.POST['tel']
+            if 'title_show' in request.POST.keys():
+                data_master.title_show  = True
+            else:
+                data_master.title_show  = False 
+            if 'img_show' in request.POST.keys():
+                data_master.img_show  = True
+            else:
+                data_master.img_show  = False 
+            if 'scan_show' in request.POST.keys():
+                data_master.scan_show  = True
+            else:
+                data_master.scan_show  = False 
             try:
                 if request.FILES['img']:
                     myfile = request.FILES['img']

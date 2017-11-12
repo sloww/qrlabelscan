@@ -27,6 +27,7 @@ wheels/
 migrations/
 __pycache__
 *.swp
+*.swo
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

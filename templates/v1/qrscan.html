@@ -3,47 +3,55 @@
 编号查询
 {% endblock %}
 {% block body %}
+
+{% if data_master.title_show %}
 <div class="page__hd">
-<div class="weui-tab">
-<div class="weui-navbar">
-<div class="weui-navbar__item weui-bar__item_on">
-{{data_master.title}}
+    <div class="weui-tab">
+        <div class="weui-navbar">
+            <div class="weui-navbar__item weui-bar__item_on">
+            {{data_master.title}}
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-</div>
+{% endif %}
+
 <div class="page__bd page__bd_spacing">
-<div class="weui-flex">
-<div class="weui-flex__item"><p>img</p></div>
-</div>
-<div class="weui-flex">
-<div class="weui-flex__item">
 
-<img style="max-width:100%;"  src="{{data_master.img_url}}"/></div>
+    {% if data_master.img_show %}
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+        <img style="max-width:100%;"  src="{{data_master.img_url}}"/>
+        </div>
+    </div>
+    {% endif %}
 
-</div>
-<div style="padding-left:10px;padding-right:10px;">
-<center>
-<h2>
-<div>查询结果</div>
-</h2>
-</center>
+    <div style="padding-left:10px;padding-right:10px;">
 
-<div  style="padding-top:15px">
-<div class="weui-flex">
-    <div class="weui-flex__item">您查询的产品编号是：<a style="color:red; ">{{qr_label.qrcode}}</a></div>
-</div>
+        <center>
+            <h2>
+            <div>查询结果</div>
+            </h2>
+        </center>
 
-<div class="weui-flex">
-    <div class="weui-flex__item" >{{data_master.describe}}</a> </div>
-</div>
-</div>
-<div  style="padding-top:15px">
-<div class="weui-flex">
-    <div class="weui-flex__item">查询次数：<a href='label-scan-list/'>{{qr_label.scaned_times}}</a> </div>
-</div>
-<div class="weui-flex">
-    <div class="weui-flex__item">首查时间：{{qr_label.get_first_scan.scan_date}} </div>
-</div>
-</div>
+        <div  style="padding-top:15px">
+            <div class="weui-flex">
+                <div class="weui-flex__item">您查询的产品编号是：<a style="color:red; ">{{qr_label.qrcode}}</a></div>
+            </div>
+
+            <div class="weui-flex">
+                <div class="weui-flex__item" >{{data_master.describe}} </div>
+            </div>
+
+        {% if data_master.scan_show %}
+            <div class="weui-flex">
+                <div class="weui-flex__item">查询次数：<a href='label-scan-list/'>{{qr_label.scaned_times}}</a> </div>
+            </div>
+            <div class="weui-flex">
+                <div class="weui-flex__item">首查时间：{{qr_label.get_first_scan.scan_date}} </div>
+            </div>
+        {% endif %} 
+        </div>
+    </div>
 </div>
 {% endblock %}

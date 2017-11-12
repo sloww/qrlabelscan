@@ -5,6 +5,34 @@
 {% endblock %}
 
 {% block body %}
+<div class="page">
+<!--
+<div class="weui-tab">
+            <div class="weui-navbar">
+                <div class="weui-navbar__item">
+                    预览
+                </div>
+                <div class="weui-navbar__item">
+                    设定
+                </div>
+                <div class="weui-navbar__item">
+                    统计
+                </div>
+            </div>
+            <div class="weui-tab__panel">
+
+            </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.weui-navbar__item').on('click', function () {
+            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+        });
+    });
+</script>
+-->
+
 
 <center>
 <h1>
@@ -94,42 +122,99 @@
 
 <form  method="post" enctype="multipart/form-data">
         {% csrf_token %}
-<div class="weui-cells__title">单位名称</div>
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <input name="title" class="weui-input" type="text" placeholder="请输入文本" value = "{{ data_master.title }}" />
-                </div>
+
+    <div class="weui-cells__title">单位名称</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input name="title" class="weui-input" type="text" placeholder="请输入文本" value = "{{ data_master.title }}" />
             </div>
         </div>
-</div>
+    </div>  
 
-<div class="weui-cells__title">上传图片</div>
-        <div class="weui-cells">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <input name="img" class="weui-input" type="file" accept="image/*"  placeholder="请输入图片" />
-                </div>
+    <div class="weui-cell weui-cell_switch">
+        <div class="weui-cell__bd">是否显示题目</div>
+        <div class="weui-cell__ft">
+                <label for="title_show" class="weui-switch-cp">
+                        {% if data_master.title_show %}
+                        <input id="title_show" name="title_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
+                        {% endif %}
+                        {% if data_master.title_show == False %}
+                        <input id="title_show" name="title_show" class="weui-switch-cp__input" type="checkbox" />
+                        {% endif %}
+                        
+                         
+                        <div class="weui-switch-cp__box"></div>
+                </label>
+        </div>
+    </div>
+<!--
+    <div class="weui-cells__title">是否显示标题</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input name="title" class="weui-input" type="text" placeholder="请输入文本" value = "{{ data_master.title_show }}" />
             </div>
         </div>
+    </div>
+-->
 
+    <div class="weui-cells__title">上传图片</div>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <input name="img" class="weui-input" type="file" accept="image/*"  placeholder="请输入图片" />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="weui-cell weui-cell_switch">
+        <div class="weui-cell__bd">是否显示主图</div>
+        <div class="weui-cell__ft">
+                <label for="img_show" class="weui-switch-cp">
+                        {% if data_master.img_show %}
+                        <input id="img_show" name="img_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
+                        {% endif %}
+                        {% if data_master.img_show == False %}
+                        <input id="img_show" name="img_show" class="weui-switch-cp__input" type="checkbox" />
+                        {% endif %}
+                        <div class="weui-switch-cp__box"></div>
+                </label>
+        </div>
+    </div>
+
+    <div class="weui-cell weui-cell_switch">
+        <div class="weui-cell__bd">是否显示扫描信息</div>
+        <div class="weui-cell__ft">
+                <label for="scan_show" class="weui-switch-cp">
+                        {% if data_master.scan_show %}
+                        <input id="scan_show" name="scan_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
+                        {% endif %}
+                        {% if data_master.scan_show == False %}
+                        <input id="scan_show" name="scan_show" class="weui-switch-cp__input" type="checkbox" />
+                        {% endif %}
+                        <div class="weui-switch-cp__box"></div>
+                </label>
+        </div>
+    </div>
 
 <div class="weui-cells__title">正确后的描述文字</div>
-        <div class="weui-cells weui-cells_form">
-            <div class="weui-cell">
-                <div class="weui-cell__bd">
-                    <textarea class="weui-textarea" placeholder="请输入文本" rows="5" name="describe">{{data_master.describe}}</textarea>
-                </div>
+    <div class="weui-cells weui-cells_form">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <textarea class="weui-textarea" placeholder="请输入文本" rows="5" name="describe">{{data_master.describe}}</textarea>
             </div>
         </div>
+    </div>
 <div class="weui-cell weui-cell_vcode">
-                <div class="weui-cell__hd">
-                    <label class="weui-label">电话</label>
-                </div>
-                <div class="weui-cell__bd">
-                    <input name="tel" class="weui-input" type="text" placeholder="请输入电话号码"  value = "{{ data_master.tel }}" />
-                </div>
-            </div>
+    <div class="weui-cell__hd">
+        <label class="weui-label">电话</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input name="tel" class="weui-input" type="text" placeholder="请输入电话号码"  value = "{{ data_master.tel }}" />
+    </div>
+</div>
 
 <div class="weui-btn-area" style="padding-top:20px">
          <input type="submit" value="提交" class="weui-btn weui-btn_primary">        </div>
@@ -141,8 +226,9 @@
 <div style="color:blue">统计</div>
 </h1>
 </center>
-</div>
 <div class="page__bd" style="padding-top:15px;border-color:blue;border-style: solid; border-width:1px;margin-left:1px;margin-right:1px">
     <div class="weui-cells__title">共<a href="get-datamaster-detail/">{{data_master.label_count}}</a>枚粘贴码</div>
+</div>
+
 </div>
 {% endblock %}

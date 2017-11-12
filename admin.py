@@ -2,22 +2,28 @@ from django.contrib import admin
 
 from .models import DataMaster,QrLabel, ScanRecord, LabelRecord
 from django import forms
+from searchadmin.admin import SelectModelAdmin
 
 
-class DataMasterAdmin(admin.ModelAdmin):
+class DataMasterAdmin(SelectModelAdmin):
+    search_fields = ('title','remark','distributor',)
     list_display = ('master_code','title','remark', 'distributor', )
-    fields = ('master_code','title','img_url', 'describe', 'tel','master_uuid','remark', 'distributor', )
+    fields = ('master_code','title_show','title','img_show','img_url', 'scan_show','describe', 'tel','master_uuid','remark', 'distributor', )
 
 
-class QrLabelAdmin(admin.ModelAdmin):
+#class QrLabelAdmin(admin.ModelAdmin):
+class QrLabelAdmin(SelectModelAdmin):
+    search_fields = ('qrcode',)
     list_display = ('qrcode','data_master' )
     fields = ('label_uuid','qrcode','label_code','data_master')
 
-class ScanRecordAdmin(admin.ModelAdmin):
+class ScanRecordAdmin(SelectModelAdmin):
+    search_fields = ('city',)
     list_display = ('ip','city','scan_date' )
     fields = ('qr_label','ip','json', 'city', )
 
-class LabelRecordAdmin(admin.ModelAdmin):
+class LabelRecordAdmin(SelectModelAdmin):
+    search_fields = ('master_code',)
     list_display = ('master_code','label_code', )
     fields = ('master_code','label_code', )
 

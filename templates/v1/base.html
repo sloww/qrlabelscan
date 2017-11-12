@@ -11,8 +11,6 @@
 </head>
 <body ontouchstart>
 
-<div class="page">
-
     {% block body %}block {% endblock %}
 
     <div class="page__ft" style="padding-top:40px">
@@ -23,10 +21,13 @@
             <p class="weui-footer__links">
                 <a  class="weui-footer__link">{{data_master.title}}</a>
             </p>
-            <p class="weui-footer__text">Copyright &copy; 2012-2018 tslink.cc</p>
+            <p class="weui-footer__text">Copyright &copy; 2012-2018 tslink.cn</p>
         </div>
     </div>
 
-</div>
+
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="https://res.wx.qq.com/open/libs/weuijs/1.0.0/weui.min.js"></script>
+    <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.min.js"></script>
 </body>
 </html>
