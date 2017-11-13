@@ -17,7 +17,7 @@ class QrLabelAdmin(SelectModelAdmin):
     list_display = ('qrcode','data_master' )
     fields = ('label_uuid','qrcode','label_code','data_master')
 
-class ScanRecordAdmin(ModelAdmin):
+class ScanRecordAdmin(admin.ModelAdmin):
     search_fields = ('city',)
     list_display = ('ip','city','scan_date' )
     fields =  ('ip','city','scan_date' )
