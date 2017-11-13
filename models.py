@@ -122,6 +122,7 @@ class QrLabel(models.Model):
 
 class ScanRecord(models.Model):
     qr_label = models.ForeignKey(QrLabel, on_delete=models.CASCADE)
+
     ip = models.GenericIPAddressField(
         verbose_name="IP地址",
         )
@@ -137,7 +138,7 @@ class ScanRecord(models.Model):
         ) 
 
     def __str__(self):
-        return "%s ( %s )" % (self.scan_date, self.qr_label.qrcode)
+        return "%s" % (self.scan_date, )
 
     class Meta():
         verbose_name = "扫码记录"
