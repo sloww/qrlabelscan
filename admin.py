@@ -20,7 +20,6 @@ class QrLabelAdmin(SelectModelAdmin):
 class ScanRecordAdmin(SelectModelAdmin):
     search_fields = ('city',)
     list_display = ('ip','city','scan_date' )
-    fields = ('ip','json', 'city','scan_date', )
 
 class LabelRecordAdmin(SelectModelAdmin):
     search_fields = ('master_code',)
