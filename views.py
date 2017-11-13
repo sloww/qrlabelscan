@@ -148,7 +148,7 @@ def get_new_labels(request,num):
         title = "公司名称"
         describe = "您查询的是正品，请放心使用。有任何技术问题，可拨打 021-50687572 或加 QQ群 590646661 进行咨询！"
         tel = "021-50687572"
-        img_url = "http://g-cc.oss-cn-hangzhou.aliyuncs.com/pub/noimage.png"
+        img_url = "http://tslink-cc.oss-cn-hangzhou.aliyuncs.com/pub/noimage.png"
         md = DataMaster(master_uuid = master_uuid,
             master_code = master_code,
             title = title,
