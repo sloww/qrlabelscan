@@ -10,8 +10,11 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.http import StreamingHttpResponse
 from qqwry import QQwry
 import time
+import os
+import shutil
+import oss2
+from django.conf import settings                    
 
-URLPRE = "http://tslink.cc/a/"
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -56,7 +59,6 @@ def set_data_master(request,uuid):
     try:
         data_master =  DataMaster.objects.get(master_uuid = uuid)
         if request.POST:
-            print(request.POST)
             data_master.title = request.POST['title']
             data_master.describe = request.POST['describe']
             data_master.tel = request.POST['tel']
@@ -74,10 +76,16 @@ def set_data_master(request,uuid):
                 data_master.scan_show  = False 
             try:
                 if request.FILES['img']:
+                    bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID, 
+                        settings.ACCESS_KEY_SECRET), settings.ENDPOINT, settings.BUCKET_NAME)
                     myfile = request.FILES['img']
-                    fs = FileSystemStorage()
-                    filename = fs.save(myfile.name, myfile)
-                    data_master.img_url = fs.url(filename)
+                    new_name = data_master.master_code+ os.path.splitext(myfile.name)[1]
+                    print(new_name)
+                    n =  bucket.put_object(new_name, myfile)
+                    #fs = FileSystemStorage()
+                    #filename = fs.save(myfile.name, myfile)
+                    #data_master.img_url = fs.url(filename)
+                    data_master.img_url = settings.IMGPREURL + new_name +"?x-oss-process=image/resize,w_1200/auto-orient,1/quality,q_90/format,src"
             except:
                 pass
             data_master.save()
@@ -99,7 +107,7 @@ def get_label_list(request, master_code):
     if dm:
         labels = QrLabel.objects.filter(data_master = dm).order_by('-label_code')
         for label in labels:
-            con = con + URLPRE + '%s/,%s,%s<br>' % (label.label_uuid,dm.master_code,label.label_code)
+            con = con + settings.URLPRE + '%s/,%s,%s<br>' % (label.label_uuid,dm.master_code,label.label_code)
     return HttpResponse(con) 
 
 
@@ -109,7 +117,7 @@ def get_datamaster_list(request):
     dms = DataMaster.objects.order_by('master_code')
     con=""
     for dm in dms:
-        con = con + URLPRE + '%s/setdm/,%s <br>' % (dm.master_uuid, dm.master_code,)  
+        con = con + settings.URLPRE + '%s/setdm/,%s <br>' % (dm.master_uuid, dm.master_code,)  
     return HttpResponse(con) 
 
 
