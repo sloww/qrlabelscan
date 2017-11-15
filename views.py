@@ -14,6 +14,8 @@ import os
 import shutil
 import oss2
 from django.conf import settings                    
+from django.utils.timezone import utc
+
 
 
 def get_client_ip(request):
@@ -80,19 +82,17 @@ def set_data_master(request,uuid):
                         settings.ACCESS_KEY_SECRET), settings.ENDPOINT, settings.BUCKET_NAME)
                     myfile = request.FILES['img']
                     new_name = data_master.master_code+ os.path.splitext(myfile.name)[1]
-                    print(new_name)
-                    n =  bucket.put_object(new_name, myfile)
+                    bucket.put_object(new_name, myfile)
                     #fs = FileSystemStorage()
                     #filename = fs.save(myfile.name, myfile)
                     #data_master.img_url = fs.url(filename)
-                    data_master.img_url = settings.IMGPREURL + new_name +"?x-oss-process=image/resize,w_1200/auto-orient,1/quality,q_90/format,src"
+                    data_master.img_url = settings.IMGPREURL + new_name
             except:
                 pass
             data_master.save()
         else:
             pass
         ctx = {'data_master':data_master,}
-        print("ok63")
         return render(request, "v1/set-data-master.html", ctx)
     except:
         pass
@@ -120,6 +120,11 @@ def get_datamaster_list(request):
         con = con + settings.URLPRE + '%s/setdm/,%s <br>' % (dm.master_uuid, dm.master_code,)  
     return HttpResponse(con) 
 
+@staff_member_required
+
+def get_scanrecord_list(request):
+    context = {'srs':ScanRecord.objects.order_by('-scan_date') ,}
+    return render(request, 'v1/get-scanrecord-list.html', context)
 
 def get_datamaster_detail(request, uuid):
     dm = DataMaster.objects.get(master_uuid=uuid)

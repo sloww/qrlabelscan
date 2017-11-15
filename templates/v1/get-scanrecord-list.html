@@ -1,0 +1,65 @@
+<html>
+
+<head>
+<title>
+</title>
+</head>
+
+<body>
+
+
+<table>
+
+    <tr>
+        <td width="60px">
+        序号
+        </td>
+        <td width="200px">
+            标签
+        </td>
+        <td  width="100px">
+        IP 
+        </td>
+        <td  width="100px">
+        城市
+        </td>
+        <td width="200px" >
+        时间
+        </td>
+        <td width="100px" >
+        备注
+        </td>
+        <td width="100px" >
+        经销商
+        </td>
+    </tr>
+{% for sr in srs %}
+    <tr>
+        <td>
+        {{forloop.counter}}
+        </td>
+        <td>
+        {{sr.qr_label.qrcode}}
+        </td>
+        <td>
+        {{sr.ip}}
+        </td>
+        <td>
+        {{sr.city}}
+        </td>
+        <td>
+        {{sr.scan_date|date:'Y-m-d h:i:s'}}
+        </td>
+        <td>
+        {{ sr.qr_label.data_master.remark }}
+        </td>
+        <td>
+        {{ sr.qr_label.data_master.distributor }}
+        </td>
+    </tr>
+{% endfor %}
+
+</table>
+</body>
+
+</html>
