@@ -129,7 +129,7 @@ def get_datamaster_list(request):
 
 @staff_member_required
 def get_scanrecord_list(request, num):
-    context = {'srs':ScanRecord.objects.order_by('-scan_date') ,}
+    context = {'srs':ScanRecord.objects.order_by('-scan_date')[:int(num)] ,}
     return render(request, 'v1/get-scanrecord-list.html', context)
 
 def get_datamaster_detail(request, uuid):
