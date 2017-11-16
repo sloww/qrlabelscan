@@ -8,14 +8,17 @@ from searchadmin.admin import SelectModelAdmin
 class DataMasterAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
     list_display = ('master_code','title','remark', 'distributor', )
-    fields = ('master_code','title_show','title','img_show','img_url', 'scan_show','describe', 'tel','master_uuid','remark', 'distributor', )
+    fields = ('master_code','title_show','title','img_show',
+        'img_url', 'scan_show','describe', 'tel','master_uuid',
+        'remark', 'distributor', 'redirect_url','redirect_on',
+        )
 
 
 #class QrLabelAdmin(admin.ModelAdmin):
 class QrLabelAdmin(SelectModelAdmin):
     search_fields = ('qrcode',)
     list_display = ('qrcode','data_master' )
-    fields = ('label_uuid','qrcode','label_code','data_master')
+    fields = ('label_uuid','qrcode','label_code','data_master',)
 
 class ScanRecordAdmin(admin.ModelAdmin):
     search_fields = ('city',)

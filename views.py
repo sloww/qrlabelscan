@@ -2,7 +2,7 @@
 
 from django.http import HttpResponse
 from .models import QrLabel, DataMaster,ScanRecord,LabelRecord
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators import csrf
 from django.core.files.storage import FileSystemStorage
 import uuid
@@ -35,6 +35,8 @@ def qrscan(request, uuid):
         qr_label = QrLabel.objects.get(label_uuid = uuid) 
         qr_label.scaned(get_client_ip(request))
         data_master = qr_label.data_master
+        if data_master.redirect_on:
+            return redirect(data_master.redirect_url)
         context = {'qr_label': qr_label,'data_master':data_master}
 
         return render(request, 'v1/qrscan.html', context)
@@ -64,6 +66,7 @@ def set_data_master(request,uuid):
             data_master.title = request.POST['title']
             data_master.describe = request.POST['describe']
             data_master.tel = request.POST['tel']
+            data_master.redirect_url = request.POST['redirect_url']
             if 'title_show' in request.POST.keys():
                 data_master.title_show  = True
             else:
@@ -76,6 +79,10 @@ def set_data_master(request,uuid):
                 data_master.scan_show  = True
             else:
                 data_master.scan_show  = False 
+            if 'redirect_on' in request.POST.keys():
+                data_master.redirect_on  = True
+            else:
+                data_master.redirect_on  = False 
             try:
                 if request.FILES['img']:
                     bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID, 
@@ -122,7 +129,7 @@ def get_datamaster_list(request):
 
 @staff_member_required
 def get_scanrecord_list(request, num):
-    context = {'srs':ScanRecord.objects.order_by('-scan_date')[:int(num)] ,}
+    context = {'srs':ScanRecord.objects.order_by('-scan_date') ,}
     return render(request, 'v1/get-scanrecord-list.html', context)
 
 def get_datamaster_detail(request, uuid):

@@ -36,7 +36,7 @@ class DataMaster(models.Model):
     title = models.CharField(max_length=200,
         verbose_name="单位名称",
         )
-    title_show = models.BooleanField(default = False,
+    title_show = models.BooleanField(default =True,
         verbose_name = '是否显示题目',
         )
 
@@ -52,7 +52,14 @@ class DataMaster(models.Model):
     img_url = models.URLField(max_length=200,
         verbose_name="主图地址",
         )
-    img_show = models.BooleanField(default = False,
+    redirect_url = models.URLField(max_length=200,
+        verbose_name="跳转地址",
+        default = "http://tslink.cc"
+        )
+    redirect_on = models.BooleanField(default = False,
+        verbose_name = '是否跳转',
+        )
+    img_show = models.BooleanField(default = True,
         verbose_name = '是否显示主图',
         )
 
@@ -60,7 +67,7 @@ class DataMaster(models.Model):
         verbose_name="文字描述",
         )
 
-    scan_show = models.BooleanField(default = False,
+    scan_show = models.BooleanField(default = True,
         verbose_name = '是否显示扫描结果',
         )
 
@@ -92,6 +99,12 @@ class QrLabel(models.Model):
         max_length=200,
         verbose_name="粘贴码序号",
         )
+    remark = models.CharField(
+        max_length=200,
+        verbose_name="备注",
+        default = "-"
+        )
+
     qrcode = models.CharField(
         max_length=200,
         unique=True,
