@@ -218,7 +218,7 @@
     <div class="weui-cells">
         <div class="weui-cell">
             <div class="weui-cell__bd">
-                <input name="title" class="weui-input" type="text" placeholder="请输入跳转网址(可以是微信公众号，企业官网，或者1688之类）" value = "{{ data_master.redirecet_url }}" />
+                <input name="title" class="weui-input" type="text" placeholder="请输入跳转网址(可以是微信公众号，企业官网，或者1688之类）" value = "{{ data_master.redirect_url }}" />
             </div>
         </div>
     </div>  
@@ -227,10 +227,10 @@
         <div class="weui-cell__bd">是否跳转（优先级最高）</div>
         <div class="weui-cell__ft">
                 <label for="redirect_no" class="weui-switch-cp">
-                        {% if data_master.redirect_no %}
+                        {% if data_master.redirect_on %}
                         <input id="redirect_no" name="redirect_no" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
                         {% endif %}
-                        {% if data_master.redirect_no == False %}
+                        {% if data_master.redirect_on == False %}
                         <input id="redirect_no" name="redirect_no" class="weui-switch-cp__input" type="checkbox" />
                         {% endif %}
                         
