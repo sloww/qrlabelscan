@@ -37,9 +37,9 @@ def qrscan(request, uuid):
         data_master = qr_label.data_master
         if data_master.redirect_on:
             return redirect(data_master.redirect_url)
-        context = {'qr_label': qr_label,'data_master':data_master}
-
-        return render(request, 'v1/qrscan.html', context)
+        else:
+            context = {'qr_label': qr_label,'data_master':data_master}
+            return render(request, 'v1/qrscan.html', context)
     except:
         pass
 
