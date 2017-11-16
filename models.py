@@ -52,7 +52,7 @@ class DataMaster(models.Model):
     img_url = models.URLField(max_length=200,
         verbose_name="主图地址",
         )
-    redirect_url = models.URLField(max_length=200,
+    redirect_url = models.CharField(max_length=200,
         verbose_name="跳转地址",
         default = "http://tslink.cc"
         )
