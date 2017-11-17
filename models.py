@@ -71,6 +71,13 @@ class DataMaster(models.Model):
         verbose_name = '是否显示扫描结果',
         )
 
+    describe_show = models.BooleanField(default = True,
+        verbose_name = '是否显示描述信息',
+        )
+    feedback_show = models.BooleanField(default = False,
+        verbose_name = '是否开启标签反馈模块',
+        )
+
     tel = models.CharField(max_length=200,
         verbose_name="电话",
         )
@@ -122,16 +129,62 @@ class QrLabel(models.Model):
     def scaned(self,ip):
         sr =ScanRecord(qr_label=self, ip=ip,) 
         q = QQwry()
-        if q.load_file('qqwry.dat'):
+        if q.load_file('../qqwry.dat'):
             sr.json = q.lookup(str(ip))
             sr.city = sr.json[0]
-        sr.save()
+            sr.save()
 
     def scaned_times(self):
         return  ScanRecord.objects.filter(qr_label=self).count()
 
     def get_first_scan(self):
         return ScanRecord.objects.filter(qr_label=self).order_by('scan_date').first()
+
+
+class LabelFeedBack(models.Model):
+
+    qr_label = models.ForeignKey(
+        QrLabel, 
+        on_delete=models.CASCADE,
+        verbose_name = "标签",
+        )
+
+    feed_back_date = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="反馈时间",
+        )
+
+    feed_back = models.TextField(
+        verbose_name="反馈内容",
+        default = "无",
+        )
+
+    contact = models.CharField(
+        max_length=200,
+        verbose_name="联系方式",
+        default = "无",
+        )
+
+    uploud_img_url = models.URLField(
+        max_length=200,
+        verbose_name="反馈照片",
+        )
+
+    handled = models.BooleanField(
+        default = False,
+        verbose_name = "处理",
+        )
+
+    def __str__(self):
+        return "%s %s %s" % (self.feed_back_date, 
+            self.feed_back,
+            self.handled,
+            )
+
+    class Meta():
+        verbose_name = "标签反馈"
+        verbose_name_plural = '标签反馈'
+
 
 class ScanRecord(models.Model):
     qr_label = models.ForeignKey(QrLabel, on_delete=models.CASCADE)

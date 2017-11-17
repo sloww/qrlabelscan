@@ -55,14 +55,18 @@
             </h2>
         </center>
 
+        
         <div  style="padding-top:15px">
             <div class="weui-flex">
+
                 <div class="weui-flex__item">您查询的产品编号是：<a style="color:red; ">{{qr_label.qrcode}}</a></div>
             </div>
 
+         {% if data_master.desicribe_show %}
             <div class="weui-flex" style="padding-top:15px" >
                 <div class="weui-flex__item" >{{data_master.describe}} </div>
             </div>
+          {% endif %}
 
         {% if data_master.scan_show %}
             <div class="weui-flex" style="padding-top:15px">
@@ -74,7 +78,49 @@
             </div>
         {% endif %} 
         </div>
+
+        
+        {% if data_master.feedback_show %}
+
+    <div style="padding-top:10px">
+
+        <center>
+            <h2>
+            <div>反馈</div>
+            </h2>
+        </center>
+
+         <form  method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+            
+             <div class="weui-cells weui-cells_form"> 
+                 <div class="weui-cell"> 
+                     <div class="weui-cell__bd"> 
+                         <textarea class="weui-textarea" placeholder="反馈内容" rows="7" name="feed_back"></textarea> 
+                     </div> 
+                 </div> 
+             </div> 
+
+             <div class="weui-cell"> 
+                 <div class="weui-cell__bd"> 
+                         <input name="img" class="weui-input" type="file" accept="image/*"  placeholder="请选择图片"></input> 
+                    </div> 
+             </div> 
+
+         <div class="weui-cell"> 
+             <div class="weui-cell__bd"> 
+                 <input name="contact" class="weui-input" type="text" placeholder="联系方式 " /> 
+             </div> 
+
+         </div>
+            <div class="weui-btn-area" style="padding-top:20px"> 
+                <input type="submit" value="确认" class="weui-btn weui-btn_primary">         
+            </div>
+        </form>
     </div>
+        {% endif %}
+    </div>
+
 </div>
 </div>
 {% endblock %}

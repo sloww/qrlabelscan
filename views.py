@@ -1,7 +1,7 @@
 #coding:utf-8
 
 from django.http import HttpResponse
-from .models import QrLabel, DataMaster,ScanRecord,LabelRecord
+from .models import QrLabel, DataMaster,ScanRecord,LabelRecord,LabelFeedBack
 from django.shortcuts import render, redirect
 from django.views.decorators import csrf
 from django.core.files.storage import FileSystemStorage
@@ -15,8 +15,7 @@ import shutil
 import oss2
 from django.conf import settings                    
 from django.utils.timezone import utc
-
-
+from datetime import datetime
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -35,10 +34,30 @@ def qrscan(request, uuid):
         qr_label = QrLabel.objects.get(label_uuid = uuid) 
         qr_label.scaned(get_client_ip(request))
         data_master = qr_label.data_master
+        lfb = LabelFeedBack()
         if data_master.redirect_on:
             return redirect(data_master.redirect_url)
         else:
-            context = {'qr_label': qr_label,'data_master':data_master}
+            if request.POST:
+                lfb.qr_label = qr_label
+                lfb.feed_back = request.POST['feed_back']
+                lfb.contact = request.POST['contact']
+                print(lfb.contact)
+                try:
+                    if request.FILES['img']:
+                        bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID, 
+                            settings.ACCESS_KEY_SECRET), settings.ENDPOINT, settings.BUCKET_NAME)
+                        myfile = request.FILES['img']
+                        t0 = datetime(1, 1, 1)
+                        now = datetime.utcnow()
+                        seconds = (now - t0).total_seconds()
+                        new_name = qr_label.qrcode + str(seconds) + os.path.splitext(myfile.name)[1]
+                        bucket.put_object(new_name, myfile)
+                        lfb.uploud_img_url = settings.IMGPREURL + new_name
+                except:
+                    pass
+                lfb.save()
+            context = {'qr_label': qr_label,'data_master':data_master,}
             return render(request, 'v1/qrscan.html', context)
     except:
         pass
