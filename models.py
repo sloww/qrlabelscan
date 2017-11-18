@@ -33,12 +33,16 @@ class DataMaster(models.Model):
         )
 
     title = models.CharField(max_length=200,
-        verbose_name="单位名称",
+        verbose_name="标题",
         )
     title_show = models.BooleanField(default =True,
-        verbose_name = '是否显示题目',
+        verbose_name = '是否显示标题',
         )
 
+    company = models.CharField(max_length=200,
+        verbose_name="单位",
+        default = "太数智能科技（上海）有限公司",
+        )
     remark = models.CharField(max_length=200,
         default="",
         verbose_name="备注",

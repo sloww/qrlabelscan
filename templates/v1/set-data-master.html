@@ -124,39 +124,28 @@
         {% csrf_token %}
 
     <div class="weui-cells">
+    <div class="weui-cells__title">题目（可设定不显示)</div>
         <div class="weui-cell">
+
             <div class="weui-cell__bd">
-                <input name="title" class="weui-input" type="text" placeholder="请输入文本" value = "{{ data_master.title }}" />
+                <input name="title" class="weui-input" type="text" placeholder="题目" value = "{{ data_master.title }}" />
             </div>
+             <div class="weui-cell__ft">
+                    <label for="title_show" class="weui-switch-cp">
+                            {% if data_master.title_show %}
+                            <input id="title_show" name="title_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
+                            {% endif %}
+                            {% if data_master.title_show == False %}
+                            <input id="title_show" name="title_show" class="weui-switch-cp__input" type="checkbox" />
+                            {% endif %}
+                            
+                             
+                            <div class="weui-switch-cp__box"></div>
+                    </label>
+            </div>
+
         </div>
     </div>  
-
-    <div class="weui-cell weui-cell_switch">
-        <div class="weui-cell__bd">是否显示题目</div>
-        <div class="weui-cell__ft">
-                <label for="title_show" class="weui-switch-cp">
-                        {% if data_master.title_show %}
-                        <input id="title_show" name="title_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
-                        {% endif %}
-                        {% if data_master.title_show == False %}
-                        <input id="title_show" name="title_show" class="weui-switch-cp__input" type="checkbox" />
-                        {% endif %}
-                        
-                         
-                        <div class="weui-switch-cp__box"></div>
-                </label>
-        </div>
-    </div>
-<!--
-    <div class="weui-cells__title">是否显示标题</div>
-    <div class="weui-cells">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <input name="title" class="weui-input" type="text" placeholder="请输入文本" value = "{{ data_master.title_show }}" />
-            </div>
-        </div>
-    </div>
--->
 
     <div class="weui-cells__title">主图（可设定不显示)</div>
     <div class="weui-cells">
@@ -164,69 +153,90 @@
             <div class="weui-cell__bd">
                 <input name="img" class="weui-input" type="file" accept="image/*"  placeholder="请输入图片" />
             </div>
+            <div class="weui-cell__ft">
+                    <label for="img_show" class="weui-switch-cp">
+                            {% if data_master.img_show %}
+                            <input id="img_show" name="img_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
+                            {% endif %}
+                            {% if data_master.img_show == False %}
+                            <input id="img_show" name="img_show" class="weui-switch-cp__input" type="checkbox" />
+                            {% endif %}
+                            <div class="weui-switch-cp__box"></div>
+                    </label>
+            </div>
+ 
         </div>
     </div>
 
 
-    <div class="weui-cell weui-cell_switch">
-        <div class="weui-cell__bd">是否显示主图</div>
-        <div class="weui-cell__ft">
-                <label for="img_show" class="weui-switch-cp">
-                        {% if data_master.img_show %}
-                        <input id="img_show" name="img_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
-                        {% endif %}
-                        {% if data_master.img_show == False %}
-                        <input id="img_show" name="img_show" class="weui-switch-cp__input" type="checkbox" />
-                        {% endif %}
-                        <div class="weui-switch-cp__box"></div>
-                </label>
-        </div>
-    </div>
-
-<div class="weui-cells__title">描述文字</div>
+<div class="weui-cells__title">描述文字（可设定不显示)</div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
             <div class="weui-cell__bd">
                 <textarea class="weui-textarea" placeholder="请输入文本" rows="7" name="describe">{{data_master.describe}}</textarea>
             </div>
+            <div class="weui-cell__ft">
+                    <label for="describe_show" class="weui-switch-cp">
+                            {% if data_master.describe_show %}
+                            <input id="describe_show" name="describe_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
+                            {% endif %}
+                            {% if data_master.describe_show == False %}
+                            <input id="describe_show" name="describe_show" class="weui-switch-cp__input" type="checkbox" />
+                            {% endif %}
+                            <div class="weui-switch-cp__box"></div>
+                    </label>
+            </div>
+
         </div>
     </div>
 
-    <div class="weui-cell weui-cell_switch">
-        <div class="weui-cell__bd">是否显示扫描信息</div>
-        <div class="weui-cell__ft">
-                <label for="scan_show" class="weui-switch-cp">
-                        {% if data_master.scan_show %}
-                        <input id="scan_show" name="scan_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
-                        {% endif %}
-                        {% if data_master.scan_show == False %}
-                        <input id="scan_show" name="scan_show" class="weui-switch-cp__input" type="checkbox" />
-                        {% endif %}
-                        <div class="weui-switch-cp__box"></div>
-                </label>
+    <div class="weui-cells">
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+            <a>扫描详情（可设定不显示）</a>
+            </div>
+            <div class="weui-cell__ft">
+                    <label for="scan_show" class="weui-switch-cp">
+                            {% if data_master.scan_show %}
+                            <input id="scan_show" name="scan_show" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
+                            {% endif %}
+                            {% if data_master.scan_show == False %}
+                            <input id="scan_show" name="scan_show" class="weui-switch-cp__input" type="checkbox" />
+                            {% endif %}
+                            <div class="weui-switch-cp__box"></div>
+                    </label>
+            </div>
+ 
         </div>
     </div>
 
 <div class="weui-cell weui-cell_vcode" style="padding-top:15px">
     <div class="weui-cell__hd">
-        <label class="weui-label">电话</label>
+        <label class="weui-label">电 话</label>
         </div>
         <div class="weui-cell__bd">
             <input name="tel" class="weui-input" type="text" placeholder="请输入电话号码"  value = "{{ data_master.tel }}" />
     </div>
 </div>
+
+<div class="weui-cell" style="padding-top:15px">
+    <div class="weui-cell__hd">
+        <label class="weui-label">单 位</label>
+        </div>
+        <div class="weui-cell__bd">
+            <input name="company" class="weui-input" type="text" placeholder="请输入单位名称"  value = "{{ data_master.company }}" />
+    </div>
+</div>
+
+
+
     <div class="weui-cells__title" style="padding-top:15px">支持跳转官网，微信公众号（不会设置的，请查看说明），1688等网站</div>
     <div class="weui-cells">
         <div class="weui-cell">
             <div class="weui-cell__bd">
                 <input name="redirect_url" class="weui-input" type="text" placeholder="请输入跳转网址(可以是微信公众号，企业官网，或者1688之类）" value = "{{ data_master.redirect_url }}" />
             </div>
-        </div>
-    </div>  
-
-    <div class="weui-cell weui-cell_switch">
-        <div class="weui-cell__bd">是否跳转（优先级最高）</div>
-        <div class="weui-cell__ft">
+            <div class="weui-cell__ft">
                 <label for="redirect_on" class="weui-switch-cp">
                         {% if data_master.redirect_on %}
                         <input id="redirect_on" name="redirect_on" class="weui-switch-cp__input" type="checkbox" checked="checked"/>
@@ -238,9 +248,10 @@
                          
                         <div class="weui-switch-cp__box"></div>
                 </label>
-        </div>
-    </div>
+             </div>
 
+        </div>
+    </div>  
 
 <div class="weui-btn-area" style="padding-top:20px">
          <input type="submit" value="提交" class="weui-btn weui-btn_primary">        

@@ -96,6 +96,7 @@ def set_data_master(request,uuid):
             data_master.title = request.POST['title']
             data_master.describe = request.POST['describe']
             data_master.tel = request.POST['tel']
+            data_master.company = request.POST['company']
             data_master.redirect_url = request.POST['redirect_url']
             if 'title_show' in request.POST.keys():
                 data_master.title_show  = True
@@ -113,6 +114,11 @@ def set_data_master(request,uuid):
                 data_master.redirect_on  = True
             else:
                 data_master.redirect_on  = False 
+            if 'describe_show' in request.POST.keys():
+                data_master.describe_show  = True
+            else:
+                data_master.describe_show  = False 
+
             try:
                 if request.FILES['img']:
                     bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID, 
