@@ -2,7 +2,6 @@
 
 from django.db import models
 import uuid
-from qqwry import QQwry
 
 class LabelRecord(models.Model):
     master_code = models.IntegerField(
@@ -111,7 +110,6 @@ class QrLabel(models.Model):
         verbose_name="备注",
         default = "-"
         )
-
     qrcode = models.CharField(
         max_length=200,
         unique=True,
@@ -125,14 +123,6 @@ class QrLabel(models.Model):
     class Meta():
         verbose_name = "标签"
         verbose_name_plural = '标签'
-
-    def scaned(self,ip):
-        sr =ScanRecord(qr_label=self, ip=ip,) 
-        q = QQwry()
-        if q.load_file('../qqwry.dat'):
-            sr.json = q.lookup(str(ip))
-            sr.city = sr.json[0]
-            sr.save()
 
     def scaned_times(self):
         return  ScanRecord.objects.filter(qr_label=self).count()

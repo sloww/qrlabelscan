@@ -25,6 +25,18 @@ def get_client_ip(request):
         ip = request.META.get('REMOTE_ADDR')
     return ip
 
+def add_scan_record(qr_label,ip):
+    q = QQwry()
+    sr = ScanRecord()
+    sr.ip = ip
+    sr.qr_label = qr_label
+    if q.load_file(settings.QQPATH):
+        sr.json = q.lookup(str(ip))
+        sr.city = sr.json[0]
+    sr.save()
+
+
+
 def index(request):
     return HttpResponse("欢迎使用手机扫码平台")
 
@@ -32,7 +44,7 @@ def qrscan(request, uuid):
     response = "not exist"
     try:
         qr_label = QrLabel.objects.get(label_uuid = uuid) 
-        qr_label.scaned(get_client_ip(request))
+        add_scan_record(qr_label, get_client_ip(request))
         data_master = qr_label.data_master
         lfb = LabelFeedBack()
         if data_master.redirect_on:
@@ -42,7 +54,6 @@ def qrscan(request, uuid):
                 lfb.qr_label = qr_label
                 lfb.feed_back = request.POST['feed_back']
                 lfb.contact = request.POST['contact']
-                print(lfb.contact)
                 try:
                     if request.FILES['img']:
                         bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID, 
@@ -50,7 +61,7 @@ def qrscan(request, uuid):
                         myfile = request.FILES['img']
                         t0 = datetime(1, 1, 1)
                         now = datetime.utcnow()
-                        seconds = (now - t0).total_seconds()
+                        seconds = (now - t0).total_seconds()* 100000
                         new_name = qr_label.qrcode + str(seconds) + os.path.splitext(myfile.name)[1]
                         bucket.put_object(new_name, myfile)
                         lfb.uploud_img_url = settings.IMGPREURL + new_name
