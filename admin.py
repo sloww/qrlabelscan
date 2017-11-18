@@ -9,7 +9,7 @@ class DataMasterAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
     list_display = ('master_code','title','remark', 'distributor', )
     fields = ('master_code','title_show','title','img_show',
-        'img_url', 'scan_show','describe', 'tel','master_uuid',
+        'img_url', 'scan_show','describe','describe_show', 'tel','company','master_uuid',
         'remark', 'distributor', 'redirect_url','redirect_on',
         'feedback_show',
         )

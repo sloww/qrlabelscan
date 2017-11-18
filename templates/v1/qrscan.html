@@ -5,17 +5,6 @@
 {% block body %}
 <div class="page">
 <div class="page__bd page__bd_spacing">
-<!--
-    {% if data_master.title_show %}
-        <div class="weui-flex">
-            <div class="weui-flex__item" style="background: linear-gradient(to bottom, #eee, white 60%, #eee);">
-            <center>
-            <h2> {{data_master.title}}</h2>
-            </div>
-            </center>
-        </div>
-    {% endif %}
--->
     {% if data_master.title_show %}
     <div   class="weui-tab">
         <div class="weui-navbar">
@@ -27,20 +16,16 @@
     {% endif %}
 
     {% if data_master.title_show %}
-        <div class="weui-flex__item">
- 
-            <div class="weui-navbar__item weui-bar__item_on">
-                 {{data_master.title}}
-            </div>
+    <div class="weui-flex__item">
+
+        <div class="weui-navbar__item weui-bar__item_on">
+             {{data_master.title}}
         </div>
+    </div>
      {% endif %}
-
-
-
 
     {% if data_master.img_show %}
     <div class="weui-flex">
-
         <div class="weui-flex__item">
         <img style="max-width:100%;"  src="{{data_master.img_url}}"/>
         </div>
@@ -49,12 +34,10 @@
 
     <div style="padding-left:10px;padding-right:10px;">
 
-        
-
          {% if data_master.describe_show %}
-            <div class="weui-flex" style="padding-top:15px" >
-                <div class="weui-flex__item" >{{data_master.describe}} </div>
-            </div>
+        <div class="weui-flex" style="padding-top:15px" >
+            <div class="weui-flex__item" >{{data_master.describe}} </div>
+        </div>
           {% endif %}
 
         {% if data_master.scan_show %}
