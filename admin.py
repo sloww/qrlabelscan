@@ -4,6 +4,24 @@ from .models import DataMaster,QrLabel, ScanRecord, LabelRecord, LabelFeedBack
 from django import forms
 from searchadmin.admin import SelectModelAdmin
 
+#新加入的包
+from django.contrib.admin import AdminSite
+from django.utils.translation import ugettext_lazy
+from django.contrib.auth import get_user_model
+User = get_user_model()
+from django.contrib.auth import get_iotdata_model
+Iotdata = get_iotdata_model()
+
+
+#此处更改，相当于创了另一个页面
+class MyAdminSite(AdminSite):
+    #网站标签页标题
+    site_title = ugettext_lazy('二维码分发平台')
+    #网站标题
+    site_header = ugettext_lazy('二维码分发平台')
+
+admin_site = MyAdminSite()
+
 
 class DataMasterAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
@@ -36,9 +54,11 @@ class LabelRecordAdmin(SelectModelAdmin):
     list_display = ('master_code','label_code', )
     fields = ('master_code','label_code', )
 
-admin.site.register(DataMaster,DataMasterAdmin)
-admin.site.register(QrLabel,QrLabelAdmin)
-admin.site.register(ScanRecord,ScanRecordAdmin)
-admin.site.register(LabelRecord,LabelRecordAdmin)
-admin.site.register(LabelFeedBack,LabelFeedBackAdmin)
+admin_site.register(DataMaster,DataMasterAdmin)
+admin_site.register(QrLabel,QrLabelAdmin)
+admin_site.register(ScanRecord,ScanRecordAdmin)
+admin_site.register(LabelRecord,LabelRecordAdmin)
+admin_site.register(LabelFeedBack,LabelFeedBackAdmin)
+admin_site.register(User)
+admin_site.register(Iotdata)
 
