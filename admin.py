@@ -9,8 +9,6 @@ from django.contrib.admin import AdminSite
 from django.utils.translation import ugettext_lazy
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from django.contrib.auth import get_iotdata_model
-Iotdata = get_iotdata_model()
 
 
 #此处更改，相当于创了另一个页面
@@ -60,5 +58,4 @@ admin_site.register(ScanRecord,ScanRecordAdmin)
 admin_site.register(LabelRecord,LabelRecordAdmin)
 admin_site.register(LabelFeedBack,LabelFeedBackAdmin)
 admin_site.register(User)
-admin_site.register(Iotdata)
 
