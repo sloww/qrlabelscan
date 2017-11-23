@@ -15,7 +15,7 @@ class LabelRecord(models.Model):
 
     class Meta():
         verbose_name = "申请记录"
-        verbose_name_plural = '申请记录'
+        verbose_name_plural = '0.申请记录'
 
 class DataMaster(models.Model):
 
@@ -90,7 +90,7 @@ class DataMaster(models.Model):
 
     class Meta():
         verbose_name = "模版"
-        verbose_name_plural = '模版'
+        verbose_name_plural = '1.模版'
 
     def label_count(self):
         return  QrLabel.objects.filter(data_master=self).count()
@@ -126,7 +126,7 @@ class QrLabel(models.Model):
 
     class Meta():
         verbose_name = "标签"
-        verbose_name_plural = '标签'
+        verbose_name_plural = '2.标签'
 
     def scaned_times(self):
         return  ScanRecord.objects.filter(qr_label=self).count()
@@ -177,7 +177,7 @@ class LabelFeedBack(models.Model):
 
     class Meta():
         verbose_name = "标签反馈"
-        verbose_name_plural = '标签反馈'
+        verbose_name_plural = '4.标签反馈'
 
 
 class ScanRecord(models.Model):
@@ -202,5 +202,5 @@ class ScanRecord(models.Model):
 
     class Meta():
         verbose_name = "扫码记录"
-        verbose_name_plural = '扫码记录'
+        verbose_name_plural = '3.扫码记录'
 

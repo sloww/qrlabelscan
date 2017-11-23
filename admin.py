@@ -11,6 +11,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+
 #此处更改，相当于创了另一个页面
 class MyAdminSite(AdminSite):
     #网站标签页标题
