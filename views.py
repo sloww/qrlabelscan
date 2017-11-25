@@ -90,10 +90,13 @@ def post(request, id):
         return HttpResponse("not exist")
 
 def delete_post(request, no, id):
+    print(no)
+    print(id)
     if LabelFeedBack.objects.filter(id = id):
         p = LabelFeedBack.objects.filter(id = id)[0]
         p.is_show = False
         p.save()
+        print('ok')
     return qrscan(request, no)
 
 
