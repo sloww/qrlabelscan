@@ -97,8 +97,8 @@ def delete_post(request, no, id):
         p.is_show = False
         p.save()
         print('ok')
-    return qrscan(request, no)
-
+    url = "/a/{}/".format(no)
+    return redirect(url)
 
 def label_scan_list(request, uuid):
     response = "not exist"
