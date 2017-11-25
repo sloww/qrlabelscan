@@ -38,9 +38,9 @@ class QrLabelAdmin(SelectModelAdmin):
     fields = ('label_uuid','qrcode','label_code','data_master',)
 
 class LabelFeedBackAdmin(SelectModelAdmin):
-    search_fields = ('feed_back_date','handled',)
-    list_display =( 'feed_back_date','feed_back', 'handled' )
-    fields  = ('feed_back','uploud_img_url','handled', )
+    search_fields = ('date_time','handled',)
+    list_display =( 'date_time','feed_back', 'handled' )
+    fields  = ('feed_back','upload_img_url','handled', )
 
 
 class ScanRecordAdmin(admin.ModelAdmin):

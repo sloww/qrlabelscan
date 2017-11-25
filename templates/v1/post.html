@@ -1,0 +1,66 @@
+{% extends 'tl/base.html' %}
+{% block title %}
+记录详细
+{% endblock %}
+{% block body %}
+<div class="page">
+<div class="page__hd">
+<center>
+<h3>{{ lfb.qr_label.data_master.title}}</h3> 
+<p>{{lfb.qr_label.qrcode }}</p>
+</center>
+</div>
+<div class="page__bd">
+<article class="weui-article">
+{% if lfb.feed_back %}
+<section>
+<h2 class="title">内容:</h2>
+<section>
+<p>
+{{lfb.feed_back }}
+</p>
+</section>
+</section>
+{% endif %}
+{% if lfb.upload_img_url %}     
+<section>
+<h2 class="title">图片:</h2>
+<section>
+<img src="{{lfb.upload_img_url}}"> </img>        
+</section>
+</section>
+{% endif %}
+<table>
+<tr>
+<td>
+时间:
+</td><td> {{lfb.date_time}}
+</td>
+
+{% if lfb.contact %}
+<tr>
+<td> 
+人员:
+</td>
+<td> {{lfb.contact}}</td>
+{% endif %}
+<!--
+<tr>
+
+<td>
+
+I P :</td><td> {{lfb.ip}}</td></tr>
+-->
+</table>
+</article>
+<div class="weui-btn-area" style="padding-top:20px" onclick="window.open('/a/{{ lfb.qr_label.label_uuid }}/','mywindow');" style="cursor: pointer;">
+<input type="submit" value="确认" class="weui-btn weui-btn_primary">
+<a href="/a/delete/{{ lfb.qr_label.label_uuid }}/{{lfb.id}}/" class="weui-btn weui-btn_warn">删除此记录</a>
+</div>
+</div>
+
+{% endblock %}
+
+{% block company %}
+{{ lfb.qr_label.data_master.company }}
+{% endblock %}

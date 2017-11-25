@@ -2,6 +2,7 @@
 
 from django.db import models
 import uuid
+from datetime import datetime
 
 class LabelRecord(models.Model):
     master_code = models.IntegerField(
@@ -143,11 +144,6 @@ class LabelFeedBack(models.Model):
         verbose_name = "标签",
         )
 
-    feed_back_date = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name="反馈时间",
-        )
-
     feed_back = models.TextField(
         verbose_name="反馈内容",
         default = "无",
@@ -159,9 +155,25 @@ class LabelFeedBack(models.Model):
         default = "无",
         )
 
-    uploud_img_url = models.URLField(
-        max_length=200,
-        verbose_name="反馈照片",
+    upload_img_url = models.URLField(
+        verbose_name = '图片',
+        blank = True,
+        )
+
+    is_show = models.BooleanField(
+        verbose_name = '是否显示',
+        default = True,
+        )
+
+    date_time = models.DateTimeField(
+        verbose_name = '时间',
+        default=datetime.now(),
+        blank=True
+        )
+
+    ip = models.GenericIPAddressField(
+        verbose_name = 'IP',
+        default = '0.0.0.0',
         )
 
     handled = models.BooleanField(
@@ -170,7 +182,7 @@ class LabelFeedBack(models.Model):
         )
 
     def __str__(self):
-        return "%s %s %s" % (self.feed_back_date, 
+        return "%s %s %s" % (self.date_time, 
             self.feed_back,
             self.handled,
             )

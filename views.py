@@ -43,6 +43,7 @@ def index(request):
 def qrscan(request, uuid):
     response = "not exist"
     try:
+        print(1)
         qr_label = QrLabel.objects.get(label_uuid = uuid) 
         add_scan_record(qr_label, get_client_ip(request))
         data_master = qr_label.data_master
@@ -64,16 +65,37 @@ def qrscan(request, uuid):
                         seconds = (now - t0).total_seconds()* 100000
                         new_name = qr_label.qrcode + str(seconds) + os.path.splitext(myfile.name)[1]
                         bucket.put_object(new_name, myfile)
-                        lfb.uploud_img_url = settings.IMGPREURL + new_name
+                        lfb.upload_img_url = settings.IMGPREURL + new_name
                 except:
                     pass
                 lfb.save()
-            context = {'qr_label': qr_label,'data_master':data_master,}
+            print(2)
+            lfbs = LabelFeedBack.objects.filter(qr_label = qr_label).filter(is_show = True)
+            context = {'qr_label': qr_label,'data_master':data_master,'lfbs':lfbs}
             return render(request, 'v1/qrscan.html', context)
     except:
         pass
 
     return HttpResponse(response)
+
+
+def post(request, id):
+    try:
+        print(id)
+        lfb = LabelFeedBack.objects.get(id=id)
+        print(id)
+        context = {'lfb':lfb,}
+        return render(request, 'v1/post.html', context)
+    except:
+        return HttpResponse("not exist")
+
+def delete_post(request, no, id):
+    if LabelFeedBack.objects.filter(id = id):
+        p = LabelFeedBack.objects.filter(id = id)[0]
+        p.is_show = False
+        p.save()
+    return qrscan(request, no)
+
 
 def label_scan_list(request, uuid):
     response = "not exist"

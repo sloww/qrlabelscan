@@ -68,6 +68,21 @@
             </h2>
         </center>
 
+        {% if lfbs %}
+        <div class="weui-cells__title"> 共 {{lfbs.count}} 条记录</div>
+                                <div class="weui-cells page__category-content">
+            {% for lfb in lfbs %}
+            <div class="weui-cell weui-cell_access js_item" onclick="window.open('/a/post/{{lfb.id}}/','mywindow');" style="cursor: pointer;">
+                <div class="weui-cell__bd">
+                <p>{{lfb.feed_back | default:"无内容"}}</p>
+                </div>
+                <div class="weui-cell__ft">{{lfb.date_time|date:'Y-m-d H:i'}}</div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
          <form  method="post" enctype="multipart/form-data">
          {% csrf_token %}
             
@@ -87,7 +102,7 @@
 
          <div class="weui-cell"> 
              <div class="weui-cell__bd"> 
-                 <input name="contact" class="weui-input" type="text" placeholder="联系方式 " /> 
+                 <input name="contact" class="weui-input" type="text" placeholder="反馈人及其联系方式" /> 
              </div> 
 
          </div>
