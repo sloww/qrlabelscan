@@ -98,7 +98,9 @@ def delete_post(request, no, id):
         p.save()
         print('ok')
     url = "/a/{}/".format(no)
+    print(url)
     return redirect(url)
+    
 
 def label_scan_list(request, uuid):
     response = "not exist"

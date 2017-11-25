@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^get-label-list/(?P<master_code>\d{8})/$', views.get_label_list, name='get_label_list'),
     url(r'^(?P<uuid>[0-9A-Fa-f-]+)/setdm/get-datamaster-detail/$', views.get_datamaster_detail, name='get_datamaster_detail'),
     url(r'^post/(?P<id>\w+)/$', views.post, name='post'),
-    url(r'^delete/(?P<no>\w+)/(?P<id>\w+)/$', views.delete_post, name='delete_post'), 
+    url(r'^delete/(?P<no>[0-9A-Fa-f-]+)/(?P<id>\w+)/$', views.delete_post, name='delete_post'), 
 ]
