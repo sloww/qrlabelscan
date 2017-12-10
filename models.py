@@ -46,10 +46,12 @@ class DataMaster(models.Model):
         )
     remark = models.CharField(max_length=200,
         default="",
+        blank = True,
         verbose_name="备注",
         )
     distributor = models.CharField(max_length=200,
         default="",
+        blank = True,
         verbose_name="经销商",
         )
 
@@ -85,6 +87,11 @@ class DataMaster(models.Model):
     tel = models.CharField(max_length=200,
         verbose_name="电话",
         )
+
+    sales_on = models.BooleanField(default = False,
+        verbose_name = '销售码',
+        )
+ 
 
     def __str__(self):
         return "%s ( %s )" % (self.master_code,self.title)

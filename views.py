@@ -52,24 +52,30 @@ def qrscan(request, uuid):
             return redirect(data_master.redirect_url)
         else:
             if request.POST:
-                lfb.qr_label = qr_label
-                lfb.feed_back = request.POST['feed_back']
-                lfb.contact = request.POST['contact']
-                try:
-                    if request.FILES['img']:
-                        bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID, 
-                            settings.ACCESS_KEY_SECRET), settings.ENDPOINT, settings.BUCKET_NAME)
-                        myfile = request.FILES['img']
-                        t0 = datetime(1, 1, 1)
-                        now = datetime.utcnow()
-                        seconds = (now - t0).total_seconds()* 100000
-                        new_name = qr_label.qrcode + str(seconds) + os.path.splitext(myfile.name)[1]
-                        bucket.put_object(new_name, myfile)
-                        lfb.upload_img_url = settings.IMGPREURL + new_name
-                except:
-                    pass
-                lfb.save()
-            print(2)
+                if data_master.sales_on:
+                    qr_label.remark =datetime.now().date().isoformat()
+                    qr_label.save()
+                    print(qr_label)
+                    print(qr_label.remark)
+                else:
+
+                    lfb.qr_label = qr_label
+                    lfb.feed_back = request.POST['feed_back']
+                    lfb.contact = request.POST['contact']
+                    try:
+                        if request.FILES['img']:
+                            bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID, 
+                                settings.ACCESS_KEY_SECRET), settings.ENDPOINT, settings.BUCKET_NAME)
+                            myfile = request.FILES['img']
+                            t0 = datetime(1, 1, 1)
+                            now = datetime.utcnow()
+                            seconds = (now - t0).total_seconds()* 100000
+                            new_name = qr_label.qrcode + str(seconds) + os.path.splitext(myfile.name)[1]
+                            bucket.put_object(new_name, myfile)
+                            lfb.upload_img_url = settings.IMGPREURL + new_name
+                    except:
+                        pass
+                    lfb.save()
             lfbs = LabelFeedBack.objects.filter(qr_label = qr_label).filter(is_show = True)
             context = {'qr_label': qr_label,'data_master':data_master,'lfbs':lfbs}
             return render(request, 'v1/qrscan.html', context)

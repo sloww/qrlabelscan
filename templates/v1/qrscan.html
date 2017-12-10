@@ -27,7 +27,9 @@
     {% if data_master.img_show %}
     <div class="weui-flex">
         <div class="weui-flex__item">
+        <center>
         <img style="max-width:100%;"  src="{{data_master.img_url}}"/>
+        </center>
         </div>
     </div>
     {% endif %}
@@ -112,6 +114,34 @@
         </form>
     </div>
         {% endif %}
+        
+
+        {% if data_master.sales_on %}
+
+    <div style="padding-top:5px">
+
+    {% if not qr_label.remark == '' %}
+
+    <p>购买时间：{{qr_label.remark}}</p>
+
+    {% endif %}
+    
+    {% if  qr_label.remark == '' %}
+         <form  method="post" enctype="multipart/form-data">
+
+         {% csrf_token %}
+
+            <div class="weui-btn-area" style="padding-top:20px">
+
+
+                <input type="submit" value="出厂计时" class="weui-btn weui-btn_primary">
+            </div>
+
+            </form>
+    
+    {% endif %}
+
+    {% endif %}
     </div>
 
 </div>

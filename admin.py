@@ -29,6 +29,7 @@ class DataMasterAdmin(SelectModelAdmin):
         'img_url', 'scan_show','describe','describe_show', 'tel','company','master_uuid',
         'remark', 'distributor', 'redirect_url','redirect_on',
         'feedback_show',
+        'sales_on',
         )
 
 #class QrLabelAdmin(admin.ModelAdmin):
