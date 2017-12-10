@@ -3,6 +3,8 @@
 from django.db import models
 import uuid
 from datetime import datetime
+from django.utils.html import format_html
+from django.conf import settings
 
 class LabelRecord(models.Model):
     master_code = models.IntegerField(
@@ -129,8 +131,22 @@ class QrLabel(models.Model):
         verbose_name="粘贴码编号",
         )
 
+    url = models.URLField(
+        verbose_name = "URL地址",
+        blank = True,
+        )
+
+
+
     def __str__(self):
         return "%s ( %s )" % (self.qrcode, self.data_master.master_code)
+
+    def format_url(self):
+        return  format_html(
+            '<a href="{}">{}</a>',
+            self.url,
+            self.url,
+        )
 
     class Meta():
         verbose_name = "标签"
@@ -141,6 +157,10 @@ class QrLabel(models.Model):
 
     def get_first_scan(self):
         return ScanRecord.objects.filter(qr_label=self).order_by('scan_date').first()
+
+    def save(self, *args, **kwargs):
+        self.url = settings.URLPRE+self.label_uuid+'/'
+        super(QrLabel, self).save(*args, **kwargs)
 
 
 class LabelFeedBack(models.Model):
