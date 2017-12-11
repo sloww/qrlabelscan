@@ -91,7 +91,7 @@ class DataMaster(models.Model):
         )
 
     sales_on = models.BooleanField(default = False,
-        verbose_name = '销售码',
+        verbose_name = '售后码',
         )
  
 
@@ -135,8 +135,16 @@ class QrLabel(models.Model):
         verbose_name = "URL地址",
         blank = True,
         )
+    has_sale = models.BooleanField(
+        verbose_name = '售出',
+        default = False,
+        )
 
-
+    mark_date = models.DateTimeField(
+        verbose_name = '标记时间',
+        default=datetime.now(),
+        blank=True,
+        )
 
     def __str__(self):
         return "%s ( %s )" % (self.qrcode, self.data_master.master_code)

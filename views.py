@@ -52,13 +52,11 @@ def qrscan(request, uuid):
             return redirect(data_master.redirect_url)
         else:
             if request.POST:
-                if data_master.sales_on:
-                    qr_label.remark =datetime.now().date().isoformat()
+                if data_master.sales_on and 'sale' in request.POST.keys():
+                    qr_label.mark_date=datetime.now()
+                    qr_label.has_sale = True
                     qr_label.save()
-                    print(qr_label)
-                    print(qr_label.remark)
-                else:
-
+                if data_master.feedback_show and 'feedback' in request.POST.keys():
                     lfb.qr_label = qr_label
                     lfb.feed_back = request.POST['feed_back']
                     lfb.contact = request.POST['contact']

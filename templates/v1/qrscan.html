@@ -59,8 +59,37 @@
             </div>
         {% endif %} 
 
-        
-        {% if data_master.feedback_show %}
+ 
+    {% if data_master.sales_on %}
+
+    <div style="padding-top:5px;">
+
+    {% if qr_label.has_sale %}
+
+    <p>购买时间：{{qr_label.mark_date |date:'Y-m-d'}}</p>
+
+    {% endif %}
+    
+    {% if  not qr_label.has_sale %}
+         <form  method="post" enctype="multipart/form-data">
+
+         {% csrf_token %}
+
+            <div class="weui-btn-area" style="padding-top:20px">
+
+                <input  name ="sale" type ="hidden" value = "sale" />
+                <input type="submit" value="出厂计时" class="weui-btn weui-btn_primary">
+            </div>
+
+            </form>
+    
+    {% endif %}
+
+    {% endif %}
+</div>
+       
+
+    {% if data_master.feedback_show %}
 
     <div style="padding-top:20px">
 
@@ -108,6 +137,7 @@
              </div> 
 
          </div>
+                <input  name ="feedback" type ="hidden" value = "feedback" />
             <div class="weui-btn-area" style="padding-top:20px"> 
                 <input type="submit" value="确认" class="weui-btn weui-btn_primary">         
             </div>
@@ -115,34 +145,6 @@
     </div>
         {% endif %}
         
-
-        {% if data_master.sales_on %}
-
-    <div style="padding-top:5px">
-
-    {% if not qr_label.remark == '' %}
-
-    <p>购买时间：{{qr_label.remark}}</p>
-
-    {% endif %}
-    
-    {% if  qr_label.remark == '' %}
-         <form  method="post" enctype="multipart/form-data">
-
-         {% csrf_token %}
-
-            <div class="weui-btn-area" style="padding-top:20px">
-
-
-                <input type="submit" value="出厂计时" class="weui-btn weui-btn_primary">
-            </div>
-
-            </form>
-    
-    {% endif %}
-
-    {% endif %}
-    </div>
 
 </div>
 </div>
