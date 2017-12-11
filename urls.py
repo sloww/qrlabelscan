@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^(?P<uuid>[0-9A-Fa-f-]+)/label-scan-list/$', views.label_scan_list, name='label_scan_list'),
     url(r'^(?P<uuid>[0-9A-Fa-f-]+)/setdm/$', views.set_data_master, name='set_data_master'),
     url(r'^get-datamaster-list/$', views.get_datamaster_list, name='get_datamaster_list'),
+    url(r'^qrlabel-reset-url/$', views.qrlabel_reset_url, name='qrlabel_reset_url'),
     url(r'^get-scanrecord-list/(?P<num>\d{1,4})/$', views.get_scanrecord_list, name='get_scanrecord_list'),
     url(r'^new/(?P<num>\d{1,4})/$', views.get_new_labels, name='get_new_labels'),
     url(r'^get-label-list/(?P<master_code>\d{8})/$', views.get_label_list, name='get_label_list'),

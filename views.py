@@ -184,6 +184,15 @@ def get_label_list(request, master_code):
             con = con + settings.URLPRE + '%s/,%s,%s<br>' % (label.label_uuid,dm.master_code,label.label_code)
     return HttpResponse(con) 
 
+@staff_member_required
+
+def qrlabel_reset_url(request):
+    labels = QrLabel.objects.all()
+    for l in labels:
+        l.save()
+    con="ok"
+    return HttpResponse(con) 
+
 
 @staff_member_required
 
