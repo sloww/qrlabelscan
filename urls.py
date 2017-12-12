@@ -16,3 +16,4 @@ urlpatterns = [
     url(r'^post/(?P<id>\w+)/$', views.post, name='post'),
     url(r'^delete/(?P<no>[0-9A-Fa-f-]+)/(?P<id>\w+)/$', views.delete_post, name='delete_post'), 
 ]
+

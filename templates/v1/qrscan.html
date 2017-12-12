@@ -74,6 +74,23 @@
          <form  method="post" enctype="multipart/form-data">
 
          {% csrf_token %}
+              <div class="weui-cells weui-cells_form"> 
+                 <div class="weui-cell"> 
+                     <div class = "weui-cell__hd">
+                    序列号:
+                    </div>
+                     <div class="weui-cell__bd"> 
+                         <input class="weui-input" placeholder="序列号" type="text" name="equip_no"></input> 
+                     </div> 
+                 </div> 
+             </div> 
+
+             <div class="weui-cell"> 
+                 <div class="weui-cell__bd"> 
+                         <input name="img" class="weui-input" type="file" accept="image/*"  placeholder="请选择图片"></input> 
+                    </div> 
+             </div> 
+
 
             <div class="weui-btn-area" style="padding-top:20px">
 

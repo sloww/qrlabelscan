@@ -35,8 +35,8 @@ class DataMasterAdmin(SelectModelAdmin):
 #class QrLabelAdmin(admin.ModelAdmin):
 class QrLabelAdmin(SelectModelAdmin):
     search_fields = ('qrcode',)
-    list_display = ('qrcode','data_master','format_url' )
-    fields = ('label_uuid','qrcode','label_code','data_master',)
+    list_display = ('qrcode','data_master','remark','format_url' )
+    fields = ('label_uuid','qrcode','label_code','data_master','remark','equip_no','equip_img_url')
 
 class LabelFeedBackAdmin(SelectModelAdmin):
     search_fields = ('date_time','handled',)

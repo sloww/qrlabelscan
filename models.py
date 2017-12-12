@@ -59,6 +59,7 @@ class DataMaster(models.Model):
 
     img_url = models.URLField(max_length=200,
         verbose_name="主图地址",
+        blank = True,
         )
     redirect_url = models.CharField(max_length=200,
         verbose_name="跳转地址",
@@ -138,6 +139,18 @@ class QrLabel(models.Model):
     has_sale = models.BooleanField(
         verbose_name = '售出',
         default = False,
+        )
+
+    equip_no = models.CharField(
+        max_length=200,
+        verbose_name="设备序列号",
+        default = ""
+        )
+    
+
+    equip_img_url = models.URLField(max_length=200,
+        verbose_name="图片地址",
+        blank = True,
         )
 
     mark_date = models.DateTimeField(

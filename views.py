@@ -40,6 +40,22 @@ def add_scan_record(qr_label,ip):
 def index(request):
     return HttpResponse("欢迎使用手机扫码平台")
 
+def get_img_url(request):
+    new_name = ''
+    if request.FILES['img']:
+        try:
+            bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID,
+                settings.ACCESS_KEY_SECRET), settings.ENDPOINT, settings.BUCKET_NAME)
+            myfile = request.FILES['img']
+            t0 = datetime(1, 1, 1)
+            now = datetime.utcnow()
+            seconds = (now - t0).total_seconds()* 100000
+            new_name = qr_label.qrcode + str(seconds) + os.path.splitext(myfile.name)[1]
+            bucket.put_object(new_name, myfile)
+        except:
+            pass
+    return settings.IMGPREURL + new_name
+
 def qrscan(request, uuid):
     response = "not exist"
     try:
@@ -54,6 +70,8 @@ def qrscan(request, uuid):
             if request.POST:
                 if data_master.sales_on and 'sale' in request.POST.keys():
                     qr_label.mark_date=datetime.now()
+                    qr_label.equip_no = request.POST['equip_no']
+                    lfb.equip_img_url = get_img_url(request) 
                     qr_label.has_sale = True
                     qr_label.save()
                 if data_master.feedback_show and 'feedback' in request.POST.keys():
