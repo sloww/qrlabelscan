@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+</head>
+<body>
+
+<div class="container">
+  <h2>{{dm.title}}</h2>
+  <p>{{dm.master_code}}</p>
+  <div class="table-responsive">          
+  <p></p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>标签</th>
+        <th>设备号</th>
+        <th>反馈</th>
+        <th>图片</th>
+        <th>人员</th>
+        <th>时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for fb in lfbs %}
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{fb.qr_label.qrcode}}</td>
+        <td>{{fb.qr_label.equip_no}}</td>
+        <td>{{fb.feed_back}}</td>
+        <td>
+{% if fb.upload_img_url %}
+
+<a href="{{fb.upload_img_url}}">图片</a>
+{% endif %}
+        </td>
+        <td>{{fb.user}}</td>
+        <td>{{fb.date_time|date:'Y-m-d h:m'}}</td>
+      </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+
+</body>
+</html>
+
+

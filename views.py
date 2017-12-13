@@ -94,7 +94,7 @@ def qrscan(request, uuid):
                     lfb.save()
             lfbs = LabelFeedBack.objects.filter(qr_label = qr_label).filter(is_show = True)
             context = {'qr_label': qr_label,'data_master':data_master,'lfbs':lfbs}
-            return render(request, 'v1/qrscan.html', context)
+            return render(request, data_master.template, context)
     except:
         pass
 
@@ -103,13 +103,23 @@ def qrscan(request, uuid):
 
 def post(request, id):
     try:
-        print(id)
         lfb = LabelFeedBack.objects.get(id=id)
         print(id)
         context = {'lfb':lfb,}
         return render(request, 'v1/post.html', context)
     except:
         return HttpResponse("not exist")
+
+@staff_member_required
+def get_lfbs(request, master_uuid):
+    try:
+        lfbs = LabelFeedBack.objects.filter(qr_label__data_master__master_uuid = master_uuid)
+        dm = DataMaster.objects.get(master_uuid = master_uuid)
+        context = {'lfbs':lfbs,'dm':dm}
+        return render(request, 'p/feedback.html', context)
+    except:
+        return HttpResponse("not exist")
+
 
 def delete_post(request, no, id):
     print(no)

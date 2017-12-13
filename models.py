@@ -80,22 +80,38 @@ class DataMaster(models.Model):
         verbose_name = '是否显示扫描结果',
         )
 
-    describe_show = models.BooleanField(default = True,
+    describe_show = models.BooleanField(
+        default = True,
         verbose_name = '是否显示描述信息',
         )
-    feedback_show = models.BooleanField(default = False,
+    feedback_show = models.BooleanField(
+        default = False,
         verbose_name = '是否开启标签反馈模块',
         )
 
-    tel = models.CharField(max_length=200,
+    tel = models.CharField(
+        max_length=200,
         verbose_name="电话",
         )
 
-    sales_on = models.BooleanField(default = False,
+    template = models.CharField(
+        max_length=200,
+        verbose_name = "模版名称",
+        default = 'v1/qrscan.html', 
+        )
+
+    def fd_url(self):
+        return  format_html(
+            '<a href="/a/{}/feedback/">反馈清单</a>',
+            self.master_uuid,
+        )
+
+
+    sales_on = models.BooleanField(
+        default = False,
         verbose_name = '售后码',
         )
- 
-
+   
     def __str__(self):
         return "%s ( %s )" % (self.master_code,self.title)
 
@@ -202,6 +218,14 @@ class LabelFeedBack(models.Model):
         verbose_name="联系方式",
         default = "无",
         )
+
+
+    user = models.CharField(
+        max_length=200,
+        verbose_name="人员",
+        default = "",
+        )
+
 
     upload_img_url = models.URLField(
         verbose_name = '图片',

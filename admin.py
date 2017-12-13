@@ -24,13 +24,23 @@ admin_site = MyAdminSite()
 
 class DataMasterAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
-    list_display = ('master_code','title','remark', 'distributor', )
-    fields = ('master_code','title_show','title','img_show',
-        'img_url', 'scan_show','describe','describe_show', 'tel','company','master_uuid',
-        'remark', 'distributor', 'redirect_url','redirect_on',
+    list_display = ('master_code','title','remark', 'distributor', 'fd_url')
+    fields = ('master_uuid',
+        'master_code',
+        ('title','title_show',),
+        ('img_url','img_show',),
+        'scan_show',
+        ('describe','describe_show'),
+        'tel','company',
+        'remark', 'distributor', 
+        ('redirect_url','redirect_on'),
         'feedback_show',
         'sales_on',
+        'template',
+        'fd_url',
         )
+    readonly_fields = ('master_uuid','master_code','fd_url')
+
 
 #class QrLabelAdmin(admin.ModelAdmin):
 class QrLabelAdmin(SelectModelAdmin):
