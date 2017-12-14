@@ -115,8 +115,8 @@ def get_lfbs(request, master_uuid):
     try:
         lfbs = LabelFeedBack.objects.filter(qr_label__data_master__master_uuid = master_uuid)
         dm = DataMaster.objects.get(master_uuid = master_uuid)
-        context = {'lfbs':lfbs,'dm':dm}
-        return render(request, 'p/feedback.html', context)
+        context = {'lfbs':lfbs,'dm':dm,'admin_url':'myadmin'}
+        return render(request, 'p/fb.html', context)
     except:
         return HttpResponse("not exist")
 

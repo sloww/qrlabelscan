@@ -116,8 +116,8 @@ class DataMaster(models.Model):
         return "%s ( %s )" % (self.master_code,self.title)
 
     class Meta():
-        verbose_name = "模版"
-        verbose_name_plural = '1.模版'
+        verbose_name = "标签组"
+        verbose_name_plural = '1.标签组'
 
     def label_count(self):
         return  QrLabel.objects.filter(data_master=self).count()

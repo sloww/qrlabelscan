@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hans" >
+<head>
+<title>{% block title %}
+{% endblock %}
+</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css" />
+
+<script type="text/javascript" src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script type="text/javascript" src="/static/admin/js/jquery.init.js"></script>
+<script type="text/javascript" src="/static/admin/js/core.js"></script>
+<script type="text/javascript" src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script type="text/javascript" src="/static/admin/js/actions.js"></script>
+<script type="text/javascript" src="/static/admin/js/urlify.js"></script>
+<script type="text/javascript" src="/static/admin/js/prepopulate.js"></script>
+<script type="text/javascript" src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css" />
+
+<meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+
+
+<body data-admin-utc-offset="0">
+
+<!-- Container -->
+<div id="container">
+
+    
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+        
+<h1 id="site-name"><a href="/{{admin_url}}/">二维码分发平台</a></h1>
+        </div>
+        <div id="user-tools">
+                欢迎，
+                <strong>way</strong>.
+            
+                    <a href="/">查看站点</a> /
+
+                <a href="/{{admin_url}}/password_change/">修改密码</a> /
+                
+                <a href="/{{admin_url}}/logout/">注销</a>
+            
+        </div>
+        
+        
+        
+    </div>
+    <!-- END Header -->
+    
+<div class="breadcrumbs">
+<a href="/{{admin_url}}/">首页</a>
+
+    &rsaquo; <a href="/{{admin_url}}/v1/">智慧二维码</a>
+&rsaquo;{% block breadcrumbs %} {% endblock %} 
+</div>
+
+    
+
+    
+        
+    
+
+    <!-- Content -->
+    <div id="content" class="flex">
+        
+{% block content %}
+{% endblock %}
+       <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>
+
