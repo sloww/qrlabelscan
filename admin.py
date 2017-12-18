@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import DataMaster,QrLabel, ScanRecord, LabelRecord, LabelFeedBack
+from .models import DataMaster,QrLabel, ScanRecord, LabelRecord, LabelFeedBack,DMP
 from django import forms
 from searchadmin.admin import SelectModelAdmin
 
@@ -39,7 +39,26 @@ class DataMasterAdmin(SelectModelAdmin):
         'template',
         'fd_url',
         )
-    readonly_fields = ('master_uuid','master_code','fd_url')
+    readonly_fields = ('master_uuid','fd_url')
+
+class DMPAdmin(SelectModelAdmin):
+    search_fields = ('title','remark','distributor',)
+    list_display = ('master_code','title','remark', 'distributor', 'fd_url')
+    fields = ('master_uuid',
+        'master_code',
+        ('title','title_show',),
+        ('img_url','img_show',),
+        'scan_show',
+        ('describe','describe_show'),
+        'tel','company',
+        'remark', 'distributor', 
+        ('redirect_url','redirect_on'),
+        'feedback_show',
+        'sales_on',
+        'template',
+        'fd_url',
+        )
+    readonly_fields = ('master_uuid','fd_url')
 
 
 #class QrLabelAdmin(admin.ModelAdmin):
@@ -65,6 +84,7 @@ class LabelRecordAdmin(SelectModelAdmin):
     fields = ('master_code','label_code', )
 
 admin_site.register(DataMaster,DataMasterAdmin)
+admin_site.register(DMP,DMPAdmin)
 admin_site.register(QrLabel,QrLabelAdmin)
 admin_site.register(ScanRecord,ScanRecordAdmin)
 admin_site.register(LabelRecord,LabelRecordAdmin)

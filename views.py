@@ -56,7 +56,9 @@ def get_img_url(request):
             pass
     return settings.IMGPREURL + new_name
 
-def qrscan(request, uuid):
+
+
+def qrscan_template(request, uuid, template):
     response = "not exist"
     try:
         print(1)
@@ -93,13 +95,22 @@ def qrscan(request, uuid):
                         pass
                     lfb.save()
             lfbs = LabelFeedBack.objects.filter(qr_label = qr_label).filter(is_show = True)
-            context = {'qr_label': qr_label,'data_master':data_master,'lfbs':lfbs}
-            return render(request, data_master.template, context)
+            context = {'qr_label': qr_label,'data_master':data_master,'lfbs':lfbs}  
+            if template:
+                return render(request, template, context)
+            else:
+                return render(request, data_master.template, context)
     except:
         pass
 
     return HttpResponse(response)
 
+def qrscan(request, uuid):
+    return qrscan_template(request, uuid, '')
+
+
+def qrscan_edit(request, uuid):
+    return qrscan_template(request, uuid, 'v1/qrscan.html')
 
 def post(request, id):
     try:
@@ -107,6 +118,7 @@ def post(request, id):
         print(id)
         context = {'lfb':lfb,}
         return render(request, 'v1/post.html', context)
+        
     except:
         return HttpResponse("not exist")
 
@@ -122,15 +134,14 @@ def get_lfbs(request, master_uuid):
 
 
 def delete_post(request, no, id):
-    print(no)
-    print(id)
+    print('删除评论-开始')
     if LabelFeedBack.objects.filter(id = id):
         p = LabelFeedBack.objects.filter(id = id)[0]
         p.is_show = False
         p.save()
         print('ok')
-    url = "/a/{}/".format(no)
-    print(url)
+    url = "/a/{}/edit/".format(no)
+    print('删除评论')
     return redirect(url)
     
 
@@ -247,6 +258,50 @@ def get_datamaster_detail(request, uuid):
 
 @staff_member_required
 def get_new_labels(request,num):
+    try:
+        label_record = LabelRecord.objects.order_by('master_code').last()
+        name_space = uuid.NAMESPACE_DNS
+        master_code = '10000001' 
+        lr = LabelRecord()
+        if LabelRecord.objects.order_by('master_code').count()>0:
+            master_code = str(label_record.master_code+1).rjust(8,'0')
+            lr.master_code = label_record.master_code +1
+        else:
+            lr.master_code=10000001
+        lr.label_code = int(num)
+        lr.save()
+        master_uuid = str(uuid.uuid5(name_space,master_code))
+        title = "公司名称"
+        describe = "您查询的是正品，请放心使用。有任何技术问题，可拨打 021-50687572 或加 QQ群 590646661 进行咨询！"
+        tel = "021-50687572"
+        img_url = "http://tslink-cc.oss-cn-hangzhou.aliyuncs.com/pub/noimage.png"
+        md = DataMaster(master_uuid = master_uuid,
+            master_code = master_code,
+            title = title,
+            describe = describe,
+            tel = tel,
+            img_url = img_url,
+            ) 
+        md.save() 
+        t = int(num)+1
+        for x in range(1, t):
+            label_code =  str(x).rjust(8,'0')
+            qrcode = master_code + label_code
+            label_uuid = str(uuid.uuid5(name_space, qrcode))
+            qrlabel = QrLabel(data_master = md,
+                qrcode = qrcode,
+                label_code = label_code,
+                label_uuid = label_uuid,
+                )
+            qrlabel.save()
+        context = {'qr_labels': QrLabel.objects.filter(data_master = md).order_by("qrcode"),
+            'data_master':md,}
+        return render(request, 'v1/get-new-labels.html', context)
+    except:
+        return HttpResponse("404")
+
+@staff_member_required
+def copy_dm(request,master_uuid):
     try:
         label_record = LabelRecord.objects.order_by('master_code').last()
         name_space = uuid.NAMESPACE_DNS
