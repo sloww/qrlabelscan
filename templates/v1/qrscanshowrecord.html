@@ -1,0 +1,144 @@
+{% extends 'v1/base.html' %}
+{% block title %}
+{{ qr_label.qrcode }}
+{% endblock %}
+{% block body %}
+<div class="page">
+<div class="page__bd page__bd_spacing">
+    {% if data_master.title_show %}
+    <div   class="weui-tab">
+        <div class="weui-navbar">
+            <div class="weui-navbar__item weui-bar__item_on">
+                 {{data_master.title}}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if data_master.title_show %}
+    <div class="weui-flex__item">
+
+        <div class="weui-navbar__item weui-bar__item_on">
+             {{data_master.title}}
+        </div>
+    </div>
+     {% endif %}
+
+    {% if data_master.img_show %}
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+        <center>
+        <img style="max-width:100%;"  src="{{data_master.img_url}}"/>
+        </center>
+        </div>
+    </div>
+    {% endif %}
+
+    <div style="padding-left:10px;padding-right:10px;">
+
+         {% if data_master.describe_show %}
+        <div class="weui-flex" style="padding-top:15px" >
+            <div class="weui-flex__item" >{{data_master.describe}} </div>
+        </div>
+          {% endif %}
+
+        {% if data_master.scan_show %}
+
+            <div  style="padding-top:15px" >
+
+                <div class="weui-flex">
+                    <div class="weui-flex__item">唯一编号：{{qr_label.qrcode}} </div>
+                </div>
+
+                <div class="weui-flex">
+                    <div class="weui-flex__item">查询次数：<a href='label-scan-list/'>{{qr_label.scaned_times}} 次</a> </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">首查时间：{{qr_label.get_first_scan.scan_date}} </div>
+                </div>
+            </div>
+        {% endif %} 
+
+ 
+    {% if data_master.sales_on %}
+
+    <div style="padding-top:5px;">
+
+    {% if qr_label.has_sale %}
+
+    <p>购买时间：{{qr_label.mark_date |date:'Y-m-d'}}</p>
+
+    {% endif %}
+    
+    {% if  not qr_label.has_sale %}
+         <form  method="post" enctype="multipart/form-data">
+
+         {% csrf_token %}
+              <div class="weui-cells weui-cells_form"> 
+                 <div class="weui-cell"> 
+                     <div class = "weui-cell__hd">
+                    序列号:
+                    </div>
+                     <div class="weui-cell__bd"> 
+                         <input class="weui-input" placeholder="序列号" type="text" name="equip_no"></input> 
+                     </div> 
+                 </div> 
+             </div> 
+
+             <div class="weui-cell"> 
+                 <div class="weui-cell__bd"> 
+                         <input name="img" class="weui-input" type="file" accept="image/*"  placeholder="请选择图片"></input> 
+                    </div> 
+             </div> 
+
+
+            <div class="weui-btn-area" style="padding-top:20px">
+
+                <input  name ="sale" type ="hidden" value = "sale" />
+                <input type="submit" value="出厂计时" class="weui-btn weui-btn_primary">
+            </div>
+
+            </form>
+    
+    {% endif %}
+
+    {% endif %}
+</div>
+       
+
+    {% if data_master.feedback_show %}
+
+    <div style="padding:20px 20px 10px 20px;">
+
+        <center>
+            <h2>
+            <div ><a name="feedback">说明</a></div>
+            </h2>
+        </center>
+
+        {% if lfbs %}
+            {% for lfb in lfbs %}
+                <center><h3>{{forloop.counter}}</h3></center>
+                {% if  lfb.feed_back %}
+                <p>{{lfb.feed_back}}</p>
+                {% endif %}
+                {% if  lfb.upload_img_url %}
+                <p><img width="100%" src="{{lfb.upload_img_url}}" /></p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+    </div>
+ 
+        <center>
+            <div ><a href="edit/">编辑</a></div>
+        </center>
+            </div>
+
+    
+    {% endif %}
+        
+
+</div>
+</div>
+{% endblock %}
