@@ -73,6 +73,8 @@ class DataMaster(models.Model):
         )
 
     describe = models.TextField(max_length=900,
+        blank = True,
+        default="",
         verbose_name="文字描述",
         )
 
@@ -117,11 +119,17 @@ class DataMaster(models.Model):
 
     class Meta():
         verbose_name = "标签组"
-        verbose_name_plural = '1.标签组'
+        verbose_name_plural = '2.标签组'
 
     def label_count(self):
         return  QrLabel.objects.filter(data_master=self).count()
 
+
+class DMP(DataMaster):
+     class Meta():
+        verbose_name = '标签组模版'
+        verbose_name_plural = '1.标签组模版'
+        
 class QrLabel(models.Model):
     data_master = models.ForeignKey(DataMaster,
         on_delete=models.CASCADE,
@@ -187,7 +195,7 @@ class QrLabel(models.Model):
 
     class Meta():
         verbose_name = "标签"
-        verbose_name_plural = '2.标签'
+        verbose_name_plural = '3.标签'
 
     def scaned_times(self):
         return  ScanRecord.objects.filter(qr_label=self).count()
@@ -201,6 +209,12 @@ class QrLabel(models.Model):
 
 
 class LabelFeedBack(models.Model):
+
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False,
+        )
 
     qr_label = models.ForeignKey(
         QrLabel, 
@@ -286,5 +300,5 @@ class ScanRecord(models.Model):
 
     class Meta():
         verbose_name = "扫码记录"
-        verbose_name_plural = '3.扫码记录'
+        verbose_name_plural = '5.扫码记录'
 
