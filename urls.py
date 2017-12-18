@@ -4,7 +4,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^(?P<uuid>[0-9A-Fa-f-]+)/$', views.qrscan, name='qrscan'),
+    url(r'^(?P<uuid>[0-9A-Fa-f-]+)/', views.qrscan, name='qrscan'),
+    url(r'^(?P<uuid>[0-9A-Fa-f-]+)/edit/', views.qrscan_edit, name='qrscan_edit'),
     url(r'^(?P<uuid>[0-9A-Fa-f-]+)/label-scan-list/$', views.label_scan_list, name='label_scan_list'),
     url(r'^(?P<uuid>[0-9A-Fa-f-]+)/setdm/$', views.set_data_master, name='set_data_master'),
     url(r'^get-datamaster-list/$', views.get_datamaster_list, name='get_datamaster_list'),
@@ -14,7 +15,7 @@ urlpatterns = [
     url(r'^get-label-list/(?P<master_code>\d{8})/$', views.get_label_list, name='get_label_list'),
     url(r'^(?P<uuid>[0-9A-Fa-f-]+)/setdm/get-datamaster-detail/$', views.get_datamaster_detail, name='get_datamaster_detail'),
     url(r'^(?P<master_uuid>[0-9A-Fa-f-]+)/feedback/$', views.get_lfbs, name='get_lfbs'),
-    url(r'^post/(?P<id>\w+)/$', views.post, name='post'),
-    url(r'^delete/(?P<no>[0-9A-Fa-f-]+)/(?P<id>\w+)/$', views.delete_post, name='delete_post'), 
+    url(r'^post/(?P<id>[0-9A-Fa-f-]+)/$', views.post, name='post'),
+    url(r'^d/(?P<no>[0-9A-Fa-f-]+)/(?P<id>[0-9A-Fa-f-]+)/$', views.delete_post, name='delete_post'), 
 ]
 
