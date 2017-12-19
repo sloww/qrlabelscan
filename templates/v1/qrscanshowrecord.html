@@ -107,34 +107,25 @@
        
 
     {% if data_master.feedback_show %}
-
-    <div style="padding:20px 20px 10px 20px;">
-
-        <center>
-            <h2>
-            <div ><a name="feedback">说明</a></div>
-            </h2>
-        </center>
-
+<article class="weui-article">
+            <center>
+            <h1>{{data_master.title}}</h1>
+        
+            </center>
         {% if lfbs %}
             {% for lfb in lfbs %}
-                <center><h3>{{forloop.counter}}</h3></center>
+                <section>
                 {% if  lfb.feed_back %}
                 <p>{{lfb.feed_back}}</p>
                 {% endif %}
                 {% if  lfb.upload_img_url %}
-                <p><img width="100%" src="{{lfb.upload_img_url}}" /></p>
+                <p><img width="100%" src="{{lfb.upload_img_url}}/1000" /></p>
                 {% endif %}
-            {% endfor %}
-        {% endif %}
-
-    </div>
- 
-        <center>
-            <div ><a href="edit/">编辑</a></div>
-        </center>
-            </div>
-
+                </section>
+           {% endfor %} 
+                {% endif %}
+<a href="edit/" class="weui-btn weui-btn_warn">编辑</a>
+        </article>
     
     {% endif %}
         
