@@ -276,6 +276,7 @@ class LabelFeedBack(models.Model):
     class Meta():
         verbose_name = "标签反馈"
         verbose_name_plural = '4.标签反馈'
+        ordering = ['date_time']
 
 
 class ScanRecord(models.Model):
