@@ -94,7 +94,7 @@ def qrscan_template(request, uuid, template):
                     except:
                         pass
                     lfb.save()
-            lfbs = LabelFeedBack.objects.filter(qr_label = qr_label).filter(is_show = True)
+            lfbs = LabelFeedBack.objects.filter(qr_label = qr_label).filter(is_show = True).order_by('date_time')
             context = {'qr_label': qr_label,'data_master':data_master,'lfbs':lfbs}  
             if template:
                 return render(request, template, context)
