@@ -61,10 +61,28 @@ class DataMaster(models.Model):
         verbose_name="主图地址",
         blank = True,
         )
+
     redirect_url = models.CharField(max_length=200,
-        verbose_name="跳转地址",
+        verbose_name="默认跳转地址",
         default = "http://tslink.cc"
         )
+
+    redirect_url_wx = models.CharField(max_length=200,
+        verbose_name="跳转地址(微信客户端)",
+        default = "http://tslink.cc"
+        )
+
+    redirect_url_jd = models.CharField(max_length=200,
+        verbose_name="跳转地址(京东客户端-无效)",
+        default = "http://tslink.cc"
+        )
+
+    redirect_url_tb = models.CharField(max_length=200,
+        verbose_name="跳转地址(支付宝\淘宝)",
+        default = "http://tslink.cc"
+        )
+
+
     redirect_on = models.BooleanField(default = False,
         verbose_name = '是否跳转',
         )

@@ -61,12 +61,21 @@ def get_img_url(request):
 def qrscan_template(request, uuid, template):
     response = "not exist"
     try:
-        print(1)
         qr_label = QrLabel.objects.get(label_uuid = uuid) 
         add_scan_record(qr_label, get_client_ip(request))
         data_master = qr_label.data_master
         lfb = LabelFeedBack()
         if data_master.redirect_on:
+            agent =request.META['HTTP_USER_AGENT'].lower()
+            if 'micromessenger' in agent:
+                return redirect(data_master.redirect_url_wx)
+            if 'alipayclient' in agent:
+                return redirect(data_master.redirect_url_tb)
+            if 'aliapp' in agent:
+                return redirect(data_master.redirect_url_tb)
+            #临时占位符，非有效
+            if 'jd' in agent:
+                return redirect(data_master.redirect_url_jb)
             return redirect(data_master.redirect_url)
         else:
             if request.POST:
@@ -257,7 +266,7 @@ def get_datamaster_detail(request, uuid):
 
 
 @staff_member_required
-def get_new_labels(request,num):
+def get_new_labels_g(request,num,is_short):
     try:
         label_record = LabelRecord.objects.order_by('master_code').last()
         name_space = uuid.NAMESPACE_DNS
@@ -287,7 +296,10 @@ def get_new_labels(request,num):
         for x in range(1, t):
             label_code =  str(x).rjust(8,'0')
             qrcode = master_code + label_code
-            label_uuid = str(uuid.uuid5(name_space, qrcode))
+            if is_short:
+                label_uuid = qrcode
+            else:
+                label_uuid = str(uuid.uuid5(name_space, qrcode))
             qrlabel = QrLabel(data_master = md,
                 qrcode = qrcode,
                 label_code = label_code,
@@ -300,6 +312,14 @@ def get_new_labels(request,num):
     except:
         return HttpResponse("404")
 
+
+@staff_member_required
+def get_new_labels(request,num):
+    return get_new_labels_g(request,num,False)
+
+@staff_member_required
+def get_new_labels_s(request,num):
+    return get_new_labels_g(request,num,True)
 @staff_member_required
 def copy_dm(request,master_uuid):
     try:
