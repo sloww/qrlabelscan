@@ -21,6 +21,16 @@ class MyAdminSite(AdminSite):
 
 admin_site = MyAdminSite()
 
+#此处更改，相当于创了另一个页面
+class QrAdminSite(AdminSite):
+    #网站标签页标题
+    site_title = ugettext_lazy('二维码分发平台')
+    #网站标题
+    site_header = ugettext_lazy('二维码分发平台')
+
+qr_admin = QrAdminSite()
+
+
 
 class DataMasterAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
@@ -90,4 +100,11 @@ admin_site.register(ScanRecord,ScanRecordAdmin)
 admin_site.register(LabelRecord,LabelRecordAdmin)
 admin_site.register(LabelFeedBack,LabelFeedBackAdmin)
 admin_site.register(User)
+
+qr_admin.register(DataMaster,DataMasterAdmin)
+qr_admin.register(DMP,DMPAdmin)
+qr_admin.register(QrLabel,QrLabelAdmin)
+qr_admin.register(ScanRecord,ScanRecordAdmin)
+qr_admin.register(LabelRecord,LabelRecordAdmin)
+qr_admin.register(LabelFeedBack,LabelFeedBackAdmin)
 
