@@ -24,9 +24,9 @@ admin_site = MyAdminSite()
 #此处更改，相当于创了另一个页面
 class QrAdminSite(AdminSite):
     #网站标签页标题
-    site_title = ugettext_lazy('二维码分发平台')
+    site_title = ugettext_lazy('智码分发平台')
     #网站标题
-    site_header = ugettext_lazy('二维码分发平台')
+    site_header = ugettext_lazy('智码分发平台')
 
 qr_admin = QrAdminSite()
 
@@ -83,10 +83,11 @@ class LabelFeedBackAdmin(SelectModelAdmin):
     fields  = ('feed_back','upload_img_url','handled', )
 
 
-class ScanRecordAdmin(admin.ModelAdmin):
-    search_fields = ('city',)
-    list_display = ('ip','city','scan_date' )
-    fields =  ('ip','city', )
+class ScanRecordAdmin(SelectModelAdmin):
+    search_fields = ('city','ip')
+    list_display = ('ip','city','date','qrcode','label_remark','master_code','labels_remark')
+    readonly_fields = ('ip','date','qrcode','label_remark','master_code','labels_remark')
+    fields = ('ip','date','qrcode','label_remark','master_code','labels_remark')
 
 class LabelRecordAdmin(SelectModelAdmin):
     search_fields = ('master_code',)

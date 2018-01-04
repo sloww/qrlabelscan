@@ -165,7 +165,8 @@ class QrLabel(models.Model):
     remark = models.CharField(
         max_length=200,
         verbose_name="备注",
-        default = "-"
+        default = "",
+        blank = True,
         )
     qrcode = models.CharField(
         max_length=200,
@@ -186,7 +187,8 @@ class QrLabel(models.Model):
     equip_no = models.CharField(
         max_length=200,
         verbose_name="设备序列号",
-        default = ""
+        default = "",
+        blank = True,
         )
     
 
@@ -298,7 +300,10 @@ class LabelFeedBack(models.Model):
 
 
 class ScanRecord(models.Model):
-    qr_label = models.ForeignKey(QrLabel, on_delete=models.CASCADE)
+    qr_label = models.ForeignKey('QrLabel',
+        on_delete=models.CASCADE,
+        related_name='qrlabel_record',
+        )
 
     ip = models.GenericIPAddressField(
         verbose_name="IP地址",
@@ -310,12 +315,28 @@ class ScanRecord(models.Model):
         verbose_name="城市",
         default="",
         )
-    scan_date = models.DateTimeField(auto_now_add=True,
+    scan_date = models.DateTimeField(
+        auto_now_add=True,
         verbose_name="扫描时间",
         ) 
 
     def __str__(self):
         return "%s" % (self.scan_date, )
+
+    def date(self):
+        return "%s" % (self.scan_date.strftime("%Y-%m-%d %H:%M:%S"),)
+
+    def qrcode(self):
+        return "%s" % (self.qr_label.qrcode,)
+
+    def label_remark(self):
+        return "%s" % (self.qr_label.remark,)
+
+    def labels_remark(self):
+        return "%s" % (self.qr_label.data_master.remark,)
+
+    def master_code(self):
+        return "%s" % (self.qr_label.data_master.master_code,)
 
     class Meta():
         verbose_name = "扫码记录"
