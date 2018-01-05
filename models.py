@@ -122,13 +122,13 @@ class DataMaster(models.Model):
 
     def fd_url(self):
         return  format_html(
-            '<a href="/a/{}/feedback/">反馈清单</a>',
+            '<a href="/a/{}/feedback/" target="_blank">反馈清单</a>',
             self.master_uuid,
         )
 
     def grl_url(self):
         return  format_html(
-            '<a href="/a/scanlist/{}/9999/">扫描记录</a>',
+            '<a href="/a/scanlist/{}/9999/" target="_blank">扫描记录</a>',
             self.master_code,
         )
 
@@ -215,9 +215,16 @@ class QrLabel(models.Model):
 
     def format_url(self):
         return  format_html(
-            '<a href="{}">{}</a>',
+            '<a href="{}" target="_blank">{}</a>',
             self.url,
+            '标签',
+        )
+
+    def qr_url(self):
+        return  format_html(
+            '<a href="/a/qr/4/{}" target="_blank">{}</a>',
             self.url,
+            '二维码',
         )
 
     class Meta():

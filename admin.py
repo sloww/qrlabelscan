@@ -76,8 +76,9 @@ class DMPAdmin(SelectModelAdmin):
 #class QrLabelAdmin(admin.ModelAdmin):
 class QrLabelAdmin(SelectModelAdmin):
     search_fields = ('qrcode',)
-    list_display = ('qrcode','data_master','remark','format_url' )
-    fields = ('label_uuid','qrcode','label_code','data_master','remark','equip_no','equip_img_url')
+    list_display = ('qrcode','data_master','remark','format_url' ,'qr_url')
+    fields = ('label_uuid','qrcode','label_code','data_master','remark','equip_no','equip_img_url','format_url','qr_url')
+    readonly_fields=('label_uuid','format_url','qr_url')
 
 class LabelFeedBackAdmin(SelectModelAdmin):
     search_fields = ('date_time','handled',)

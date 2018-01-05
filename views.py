@@ -16,6 +16,44 @@ import oss2
 from django.conf import settings                    
 from django.utils.timezone import utc
 from datetime import datetime
+import qrcode
+
+
+def name():
+    t = datetime.now()
+    return '{}{}{}{}{}{}{}'.format(
+        t.year,
+        t.month,
+        t.day,
+        t.hour,
+        t.minute,
+        t.second,
+        t.microsecond,
+        )
+
+def get_qr_img_url(qrstr,box_size):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=box_size,
+        border=4,
+        )
+    qr.add_data(qrstr)
+    qr.make(fit=True)
+
+    img = qr.make_image()
+    img_name ='{}.{}'.format(name(),'png')
+    img_fullname = '{}/{}'.format(settings.MEDIA_ROOT,img_name)
+    print(img_fullname)
+    img.save(img_fullname)
+    return img_name
+
+
+def get_qr(request,box_size,qrstr):
+    c = "<img src ='/media/{}'/>".format(get_qr_img_url(qrstr,box_size),)
+    return HttpResponse(c)
+
+ 
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -95,10 +133,7 @@ def qrscan_template(request, uuid, template):
                             bucket = oss2.Bucket(oss2.Auth(settings.ACCESS_KEY_ID, 
                                 settings.ACCESS_KEY_SECRET), settings.ENDPOINT, settings.BUCKET_NAME)
                             myfile = request.FILES['img']
-                            t0 = datetime(1, 1, 1)
-                            now = datetime.utcnow()
-                            seconds = (now - t0).total_seconds()* 100000
-                            new_name = qr_label.qrcode + str(seconds) + os.path.splitext(myfile.name)[1]
+                            new_name = qr_label.qrcode + name() + os.path.splitext(myfile.name)[1]
                             bucket.put_object(new_name, myfile)
                             lfb.upload_img_url = settings.IMGPREURL + new_name
                     except:
