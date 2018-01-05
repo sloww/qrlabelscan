@@ -82,7 +82,16 @@ class DataMaster(models.Model):
         default = "http://tslink.cc"
         )
 
+    has_fix = models.BooleanField(default = False,
+        verbose_name = '是否固定（不可以删除!)',
+        )
 
+    def fix(self):
+        r = ''
+        if self.has_fix:
+            r = format_html('<a style="color:RED">固定</a>')
+        return r;
+ 
     redirect_on = models.BooleanField(default = False,
         verbose_name = '是否跳转',
         )

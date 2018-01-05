@@ -34,7 +34,7 @@ qr_admin = QrAdminSite()
 
 class DataMasterAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
-    list_display = ('master_code','title','remark', 'distributor', 'fd_url','grl_url')
+    list_display = ('master_code','title','remark', 'distributor', 'fix','fd_url','grl_url')
     fields = ('master_uuid',
         'master_code',
         ('title','title_show',),
@@ -49,6 +49,7 @@ class DataMasterAdmin(SelectModelAdmin):
         'template',
         'fd_url',
         'grl_url',
+        'has_fix',
         )
     readonly_fields = ('master_uuid','fd_url','grl_url')
 
