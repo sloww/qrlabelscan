@@ -1,0 +1,49 @@
+{% extends 'p/base.html' %}
+
+{% block title %}
+扫描记录
+{% endblock %}
+
+{% block breadcrumbs %}
+标签组
+&rsaquo; 
+ {{dm.master_code }}
+{{dm.title }}
+&rsaquo; 
+扫描记录
+{% endblock %}
+
+
+
+
+{% block content %}
+<table id="result_list">
+ <thead>
+      <tr>
+        <th>#</th>
+        <th>标签</th>
+        <th>IP</th>
+        <th>地区</th>
+        <th>时间</th>
+        <th>备注</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for sr in srs %}
+
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{sr.qr_label.qrcode}} </td>
+        <td>{{sr.ip}} </td>
+        <td>{{sr.city}} </td>
+        <td>{{sr.date}} </td>
+        <td>{{sr.qr_label.remark}} </td>
+
+      </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
+
+

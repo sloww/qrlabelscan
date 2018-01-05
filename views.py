@@ -29,6 +29,7 @@ def add_scan_record(qr_label,ip):
     q = QQwry()
     sr = ScanRecord()
     sr.ip = ip
+    sr.scan_date = datetime.now()
     sr.qr_label = qr_label
     if q.load_file(settings.QQPATH):
         sr.json = q.lookup(str(ip))
@@ -57,7 +58,7 @@ def get_img_url(request):
     return settings.IMGPREURL + new_name
 
 
-
+## 二维码扫描处理
 def qrscan_template(request, uuid, template):
     response = "not exist"
     try:
@@ -256,6 +257,17 @@ def get_scanrecord_list(request, num):
     context = {'srs':ScanRecord.objects.order_by('-scan_date')[:int(num)] ,}
     return render(request, 'v1/get-scanrecord-list.html', context)
 
+
+@staff_member_required
+def get_scanrecord_list_by_mastercode(request,master_code,num,):
+    dm = DataMaster.objects.get(master_code = master_code)
+    srs=ScanRecord.objects.filter(qr_label__data_master__master_code = master_code).order_by('-scan_date')[:int(num)]
+
+    context = {'srs':srs,'dm':dm,'admin_url':'myadmin'}
+    return render(request, 'p/scanlist.html', context)
+
+
+
 def get_datamaster_detail(request, uuid):
     dm = DataMaster.objects.get(master_uuid=uuid)
     labels = QrLabel.objects.filter(data_master = dm).order_by('label_code')
@@ -320,6 +332,8 @@ def get_new_labels(request,num):
 @staff_member_required
 def get_new_labels_s(request,num):
     return get_new_labels_g(request,num,True)
+
+#暂时没有使用
 @staff_member_required
 def copy_dm(request,master_uuid):
     try:

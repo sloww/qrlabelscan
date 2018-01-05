@@ -126,6 +126,13 @@ class DataMaster(models.Model):
             self.master_uuid,
         )
 
+    def grl_url(self):
+        return  format_html(
+            '<a href="/a/scanlist/{}/9999/">扫描记录</a>',
+            self.master_code,
+        )
+
+
 
     sales_on = models.BooleanField(
         default = False,
@@ -316,7 +323,6 @@ class ScanRecord(models.Model):
         default="",
         )
     scan_date = models.DateTimeField(
-        auto_now_add=True,
         verbose_name="扫描时间",
         ) 
 
