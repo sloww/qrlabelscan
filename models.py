@@ -54,7 +54,7 @@ class DataMaster(models.Model):
     distributor = models.CharField(max_length=200,
         default="",
         blank = True,
-        verbose_name="经销商",
+        verbose_name="1 级单位",
         )
 
     img_url = models.URLField(max_length=200,
@@ -148,6 +148,8 @@ class DataMaster(models.Model):
             self.master_code,
         )
 
+    def label_count(self):
+        return QrLabel.objects.filter(data_master = self).count()
 
     def grl_url(self):
         return  format_html(

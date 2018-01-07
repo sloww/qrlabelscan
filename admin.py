@@ -34,7 +34,7 @@ qr_admin = QrAdminSite()
 
 class DataMasterAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
-    list_display = ('master_code','title','remark', 'distributor', 'fix','fd_url','grl_url','label_list')
+    list_display = ('master_code','label_count','title','remark', 'distributor', 'fix','fd_url','grl_url','label_list',)
     fields = ('master_uuid',
         'master_code',
         ('title','title_show',),
@@ -53,6 +53,7 @@ class DataMasterAdmin(SelectModelAdmin):
         'label_list2',
         )
     readonly_fields = ('master_uuid','fd_url','grl_url','label_list2','master_code',)
+    list_per_page = 20
 
 class DMPAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
