@@ -135,6 +135,20 @@ class DataMaster(models.Model):
             self.master_uuid,
         )
 
+    def label_list(self):
+        return  format_html(
+            '<a href="../qrlabel/?q={}&field=master_code" target="_blank">标签清单</a>',
+            self.master_code,
+        )
+
+
+    def label_list2(self):
+        return  format_html(
+            '<a href="../../../qrlabel/?q={}&field=master_code" target="_blank">标签清单</a>',
+            self.master_code,
+        )
+
+
     def grl_url(self):
         return  format_html(
             '<a href="/a/scanlist/{}/9999/" target="_blank">扫描记录</a>',
@@ -174,6 +188,14 @@ class QrLabel(models.Model):
         null=False,
         verbose_name="粘贴码",
         )
+
+    master_code = models.CharField(
+        max_length=200,
+        db_index = True,
+        blank = True, 
+        verbose_name="组号",
+        )
+
     label_code = models.CharField(
         max_length=200,
         verbose_name="粘贴码序号",
@@ -248,6 +270,8 @@ class QrLabel(models.Model):
 
     def save(self, *args, **kwargs):
         self.url = settings.URLPRE+self.label_uuid+'/'
+        if not self.master_code:
+            self.master_code = self.data_master.master_code
         super(QrLabel, self).save(*args, **kwargs)
 
 

@@ -34,7 +34,7 @@ qr_admin = QrAdminSite()
 
 class DataMasterAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
-    list_display = ('master_code','title','remark', 'distributor', 'fix','fd_url','grl_url')
+    list_display = ('master_code','title','remark', 'distributor', 'fix','fd_url','grl_url','label_list')
     fields = ('master_uuid',
         'master_code',
         ('title','title_show',),
@@ -50,8 +50,9 @@ class DataMasterAdmin(SelectModelAdmin):
         'fd_url',
         'grl_url',
         'has_fix',
+        'label_list2',
         )
-    readonly_fields = ('master_uuid','fd_url','grl_url')
+    readonly_fields = ('master_uuid','fd_url','grl_url','label_list2','master_code',)
 
 class DMPAdmin(SelectModelAdmin):
     search_fields = ('title','remark','distributor',)
@@ -76,10 +77,10 @@ class DMPAdmin(SelectModelAdmin):
 
 #class QrLabelAdmin(admin.ModelAdmin):
 class QrLabelAdmin(SelectModelAdmin):
-    search_fields = ('qrcode',)
+    search_fields = ('qrcode','master_code',)
     list_display = ('qrcode','data_master','remark','format_url' ,'qr_url')
-    fields = ('label_uuid','qrcode','label_code','data_master','remark','mark_date','equip_no','equip_img_url','format_url','qr_url')
-    readonly_fields=('label_uuid','format_url','qr_url',)
+    fields = ('label_uuid','qrcode','label_code','master_code','data_master','remark','mark_date','equip_no','equip_img_url','format_url','qr_url')
+    readonly_fields=('label_uuid','format_url','qr_url','master_code',)
 
 class LabelFeedBackAdmin(SelectModelAdmin):
     search_fields = ('date_time','handled',)
