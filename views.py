@@ -39,6 +39,7 @@ def get_qr_img_url(qrstr,box_size):
         border=4,
         )
     qr.add_data(qrstr)
+    print(qrstr)
     qr.make(fit=True)
 
     img = qr.make_image()
@@ -50,7 +51,6 @@ def get_qr_img_url(qrstr,box_size):
 
 
 def get_qr(request,box_size,qrstr):
-    qrstr = qrstr.replace(':/','://') 
     c = "<img src ='/media/{}'/>".format(get_qr_img_url(qrstr,box_size),)
     return HttpResponse(c)
 
