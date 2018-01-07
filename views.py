@@ -50,6 +50,7 @@ def get_qr_img_url(qrstr,box_size):
 
 
 def get_qr(request,box_size,qrstr):
+    qrstr = qrstr.replace(':/','://') 
     c = "<img src ='/media/{}'/>".format(get_qr_img_url(qrstr,box_size),)
     return HttpResponse(c)
 
