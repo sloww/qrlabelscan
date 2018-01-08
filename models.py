@@ -250,7 +250,7 @@ class QrLabel(models.Model):
         return  format_html(
             '<a href="{}" target="_blank">{}</a>',
             self.url,
-            '标签',
+            '预览',
         )
 
     def qr_url(self):
