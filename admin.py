@@ -39,6 +39,7 @@ class DataMasterAdmin(SelectModelAdmin):
         'master_code',
         ('title','title_show',),
         ('img_url','img_show',),
+        ('video_url','video_cover_url','has_video',),
         'scan_show',
         ('describe','describe_show'),
         'tel','company',

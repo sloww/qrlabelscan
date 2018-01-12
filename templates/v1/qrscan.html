@@ -2,6 +2,18 @@
 {% block title %}
 {{ qr_label.qrcode }}
 {% endblock %}
+
+{% block head %}
+  {% if data_master.has_video %}
+ <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.5.0/skins/default/aliplayer-min.css" />
+ <script type="text/javascript" src="https://g.alicdn.com/de/prismplayer/2.5.0/aliplayer-min.js"></script>
+   {% endif %}
+
+{% endblock %}
+
+
+
+
 {% block body %}
 <div class="page">
 <div class="page__bd page__bd_spacing">
@@ -24,15 +36,41 @@
     </div>
      {% endif %}
 
+
     {% if data_master.img_show %}
     <div class="weui-flex">
         <div class="weui-flex__item">
         <center>
-        <img style="max-width:100%;"  src="{{data_master.img_url}}"/>
+        <img src="{{data_master.img_url}}" />
+         </center>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+    {% if data_master.has_video %}
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+        <center>
+        <div  class="prism-player" id="J_prismPlayer" ></div>
+        <script>
+            var player = new Aliplayer({
+            id: 'J_prismPlayer',
+            width: '100%',
+            autoplay: false,
+            //支持播放地址播放,此播放优先级最高
+            source : '{{data_master.video_url}}',
+            cover: '{{data_master.video_cover_url}}',  
+            },function(player){
+                console.log('播放器创建好了。')
+           });
+        </script>
         </center>
         </div>
     </div>
     {% endif %}
+
 
     <div style="padding-left:10px;padding-right:10px;">
 

@@ -92,9 +92,29 @@ class DataMaster(models.Model):
             r = format_html('<a style="color:RED">固定</a>')
         return r;
  
-    redirect_on = models.BooleanField(default = False,
+    redirect_on = models.BooleanField(
+        default = False,
         verbose_name = '是否跳转',
         )
+
+    video_url = models.CharField(
+        max_length=1000,
+        blank = True,
+        verbose_name = '视频地址',
+        )
+
+    video_cover_url = models.CharField(
+        max_length=1000,
+        blank = True,
+        verbose_name = '视频封面地址',
+        )
+
+
+    has_video = models.BooleanField(
+        default = False,
+        verbose_name = '是否支持视频',
+        )
+        
     img_show = models.BooleanField(default = True,
         verbose_name = '是否显示主图',
         )
