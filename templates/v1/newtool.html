@@ -1,0 +1,224 @@
+{% extends 'v1/base.html' %}
+{% block title %}
+{{ qr_label.qrcode }}
+{% endblock %}
+{% block body %}
+<div class="page">
+<div class="page__bd page__bd_spacing">
+    {% if data_master.title_show %}
+    <div   class="weui-tab">
+        <div class="weui-navbar">
+            <div class="weui-navbar__item weui-bar__item_on">
+                 {{data_master.title}}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if data_master.title_show %}
+    <div class="weui-flex__item">
+
+        <div class="weui-navbar__item weui-bar__item_on">
+             {{data_master.title}}
+        </div>
+    </div>
+     {% endif %}
+
+    {% if data_master.img_show %}
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+        <center>
+        <img style="max-width:100%;"  src="{{data_master.img_url}}"/>
+        </center>
+        </div>
+    </div>
+    {% endif %}
+
+    <div style="padding-left:10px;padding-right:10px;">
+
+         {% if data_master.describe_show %}
+        <div class="weui-flex" style="padding-top:15px" >
+            <div class="weui-flex__item" >{{data_master.describe}} </div>
+        </div>
+          {% endif %}
+
+        {% if data_master.scan_show %}
+
+            <div  style="padding-top:15px" >
+
+                <div class="weui-flex">
+                    <div class="weui-flex__item">唯一编号：{{qr_label.qrcode}} </div>
+                </div>
+
+                <div class="weui-flex">
+                    <div class="weui-flex__item">查询次数：<a href='label-scan-list/'>{{qr_label.scaned_times}} 次</a> </div>
+                </div>
+                <div class="weui-flex">
+                    <div class="weui-flex__item">首查时间：{{qr_label.get_first_scan.scan_date}} </div>
+                </div>
+            </div>
+        {% endif %} 
+
+
+            <div  style="padding-top:15px" >
+
+		{% if qr_label.var2 %}
+                <div class="weui-flex">
+                    <div class="weui-flex__item">{{qr_label.var2name}}：{{qr_label.var2}} </div>
+                </div>
+		{% endif %}
+
+		{% if qr_label.var3 %}
+                <div class="weui-flex">
+                    <div class="weui-flex__item">{{qr_label.var3name}}：{{qr_label.var3}} </div>
+                </div>
+		{% endif %}
+
+		{% if qr_label.var4 %}
+                <div class="weui-flex">
+                    <div class="weui-flex__item">{{qr_label.var4name}}：{{qr_label.var4}} </div>
+                </div>
+		{% endif %}
+
+		{% if qr_label.var5 %}
+                <div class="weui-flex">
+                    <div class="weui-flex__item">{{qr_label.var5name}}：{{qr_label.var5}} </div>
+                </div>
+		{% endif %}
+            </div>
+
+
+</div>
+
+    {% if data_master.feedback_show %}
+
+    <div style="padding-top:20px">
+
+        <center>
+            <h2>
+            <div ><a name="feedback">记录</a></div>
+            </h2>
+        </center>
+
+        {% if lfbs %}
+        <div class="weui-cells__title"> 共 {{lfbs.count}} 条记录</div>
+                                <div class="weui-cells page__category-content">
+            {% for lfb in lfbs %}
+            <div class="weui-cell weui-cell_access js_item" onclick="window.open('/a/post/{{lfb.id}}/','mywindow');" style="cursor: pointer;">
+                <div class="weui-cell__bd">
+                <p>{{lfb.feed_back | default:"无内容"}}</p>
+                </div>
+                <div class="weui-cell__ft">{{lfb.date_time|date:'Y-m-d H:i'}}</div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+         <form  method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+            
+             <div class="weui-cells weui-cells_form"> 
+                 <div class="weui-cell"> 
+                     <div class="weui-cell__bd"> 
+                         <textarea class="weui-textarea" placeholder="这里输入内容" rows="7" name="feed_back"></textarea> 
+                     </div> 
+                 </div> 
+             </div> 
+
+             <div class="weui-cell"> 
+                         <img id="blah" src="#"  />
+             </div> 
+
+
+             <div class="weui-cell"> 
+                 <div class="weui-cell__bd"> 
+                         <input id="file"  name="img" class="weui-input" type="file" accept="image/*"  placeholder="请选择图片"></input> 
+                    </div> 
+             </div> 
+
+         <div class="weui-cell"> 
+             <div class="weui-cell__bd"> 
+                 <input name="contact" class="weui-input" type="text" placeholder="记录人和联系方式" /> 
+             </div> 
+
+         </div>
+                <input  name ="feedback" type ="hidden" value = "feedback" />
+            <div class="weui-btn-area" style="padding-top:20px"> 
+                <input type="submit" value="确认" class="weui-btn weui-btn_primary">         
+            </div>
+        </form>
+    </div>
+        {% endif %}
+        
+
+</div>
+</div>
+{% endblock %}
+{% block script %}
+
+
+<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+
+<script>
+
+
+
+
+var eleFile = document.querySelector('#file');
+
+// 压缩图片需要的一些元素和对象
+var reader = new FileReader(), img = new Image();
+
+// 选择的文件对象
+var file = null;
+
+// 缩放图片需要的canvas
+var canvas = document.createElement('canvas');
+var context = canvas.getContext('2d');
+
+// base64地址图片加载完毕后
+img.onload = function () {
+    // 图片原始尺寸
+    var originWidth = this.width;
+    var originHeight = this.height;
+    // 最大尺寸限制
+    var maxWidth = 40, maxHeight = 40;
+    // 目标尺寸
+    var targetWidth = originWidth, targetHeight = originHeight;
+    // 图片尺寸超过400x400的限制
+    if (originWidth > maxWidth || originHeight > maxHeight) {
+        if (originWidth / originHeight > maxWidth / maxHeight) {
+            // 更宽，按照宽度限定尺寸
+            targetWidth = maxWidth;
+            targetHeight = Math.round(maxWidth * (originHeight / originWidth));
+        } else {
+            targetHeight = maxHeight;
+            targetWidth = Math.round(maxHeight * (originWidth / originHeight));
+        }
+    }
+        
+    // canvas对图片进行缩放
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+    // 清除画布
+    context.clearRect(0, 0, targetWidth, targetHeight);
+    // 图片压缩
+    context.drawImage(img, 0, 0, targetWidth, targetHeight);
+    var myimage = canvas.toDataURL("image/png"); 
+    $('#blah').attr('src', myimage); 
+};
+
+// 文件base64化，以便获知图片原始尺寸
+reader.onload = function(e) {
+    img.src = e.target.result;
+};
+eleFile.addEventListener('change', function (event) {
+    file = event.target.files[0];
+    // 选择的文件是图片
+    if (file.type.indexOf("image") == 0) {
+        reader.readAsDataURL(file);    
+    }
+});
+</script>
+{% endblock %}
