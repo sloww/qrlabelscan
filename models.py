@@ -394,7 +394,7 @@ class ScanRecord(models.Model):
 
     ip = models.GenericIPAddressField(verbose_name="IP地址",)
 
-    json = models.CharField(max_length=900, default="",)
+    json = models.CharField(max_length=200, default="",)
 
     city = models.CharField(max_length=200, verbose_name="城市", default="",)
 
