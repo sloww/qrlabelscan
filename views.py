@@ -39,8 +39,7 @@ def get_qr_img_url(qrstr,box_size):
         border=4,
         )
 
-    qrcon = qrstr.replace(':/','://') 
-    print(qrcon) 
+    qrcon = qrstr.replace(':/','://').replace(':///','://') 
     qr.add_data(qrcon)
     print(qrstr)
     qr.make(fit=True)
