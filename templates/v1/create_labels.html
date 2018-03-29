@@ -1,0 +1,33 @@
+{% extends 'v1/base.html' %}
+
+{% block title %}
+{{ dm }}
+{% endblock %}
+
+{% block body %}
+<div class="page">
+<div class="page__bd page__bd_spacing">
+    <div style="padding-top:20px">
+
+         <form  method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+            
+             <div class="weui-cells weui-cells_form"> 
+                 <div class="weui-cell"> 
+                     <div class="weui-cell__bd"> 
+                         <textarea class="weui-textarea" placeholder="1501YQ,液压起道机,6" rows="20" name="label_list"></textarea> 
+                     </div> 
+                 </div> 
+             </div> 
+
+         </div>
+                <input  name ="feedback" type ="hidden" value = "feedback" />
+            <div class="weui-btn-area" style="padding-top:20px"> 
+                <input type="submit" value="确认" class="weui-btn weui-btn_primary">         
+            </div>
+        </form>
+    </div>
+
+</div>
+</div>
+{% endblock %}

@@ -313,6 +313,54 @@ def get_datamaster_detail(request, uuid):
         'data_master':dm,}
     return render(request, 'v1/get-datamaster-detail.html', context)
 
+@staff_member_required
+def create_labels(request, master_code):
+    try:
+        dm = DataMaster.objects.get(master_code = master_code)
+        if request.POST:
+            print('------------')
+            if 'label_list' in request.POST.keys():
+                label_list = request.POST['label_list']
+                for line in label_list.splitlines():
+                    vals = line.split(',')
+                    print(vals)
+                    n = int(vals[2]) + 1
+                    print(n)
+                    for i in range(1, n):
+                        label_code = vals[0] + str(i).zfill(2)
+                        qrcode = master_code+'-'+label_code
+                        label_uuid = qrcode
+                        QrLabel(data_master = dm,
+                            qrcode = qrcode,
+                            label_uuid = label_uuid,
+                            label_code = label_code,
+                            var1 = label_code,
+                            var2 = vals[1],).save()
+                        print(f'{i:02}')
+                        print(str(i).zfill(2))
+                        print(vals[0])
+                        print(vals[1])
+                
+                #label_code =  str(x).rjust(8,'0')
+                #qrcode = master_code + label_code
+                #if is_short:
+                #    label_uuid = qrcode
+                #else:
+                #    label_uuid = str(uuid.uuid5(name_space, qrcode))
+                #qrlabel = QrLabel(data_master = dm,
+                #    qrcode = qrcode,
+                #    label_code = label_code,
+                #    label_uuid = label_uuid,
+                #    )
+                #qrlabel.save()
+            return HttpResponse("finished")
+        else:
+            context = {'dm':dm,}
+            return render(request, 'v1/create_labels.html', context)
+    except:
+        return HttpResponse("404")
+
+
 
 
 @staff_member_required

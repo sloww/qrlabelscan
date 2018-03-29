@@ -10,6 +10,7 @@ urlpatterns = [
     path('<uuid>/edit/', views.qrscan_edit, name='qrscan_edit'),
     path('<uuid>/label-scan-list/', views.label_scan_list, name='label_scan_list'),
     path('<uuid>/setdm/', views.set_data_master, name='set_data_master'),
+    path('create-labels/<master_code>/', views.create_labels, name='create_labels'),
     path('get-datamaster-list/', views.get_datamaster_list, name='get_datamaster_list'),
     path('qrlabel-reset-url/', views.qrlabel_reset_url, name='qrlabel_reset_url'),
     path('scanlist/<int:num>/', views.get_scanrecord_list, name='get_scanrecord_list'),
