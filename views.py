@@ -336,10 +336,6 @@ def create_labels(request, master_code):
                             label_code = label_code,
                             var1 = label_code,
                             var2 = vals[1],).save()
-                        print(f'{i:02}')
-                        print(str(i).zfill(2))
-                        print(vals[0])
-                        print(vals[1])
                 
                 #label_code =  str(x).rjust(8,'0')
                 #qrcode = master_code + label_code
