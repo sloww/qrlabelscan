@@ -2,6 +2,18 @@
 {% block title %}
 {{ qr_label.qrcode }}
 {% endblock %}
+
+{% block head %}
+  {% if data_master.has_video %}
+ <link rel="stylesheet" href="https://g.alicdn.com/de/prismplayer/2.5.0/skins/default/aliplayer-min.css" />
+ <script type="text/javascript" src="https://g.alicdn.com/de/prismplayer/2.5.0/aliplayer-min.js"></script>
+   {% endif %}
+
+{% endblock %}
+
+
+
+
 {% block body %}
 <div class="page">
 <div class="page__bd page__bd_spacing">
@@ -24,15 +36,41 @@
     </div>
      {% endif %}
 
+
     {% if data_master.img_show %}
     <div class="weui-flex">
         <div class="weui-flex__item">
         <center>
-        <img style="max-width:100%;"  src="{{data_master.img_url}}"/>
+        <img src="{{data_master.img_url}}" />
+         </center>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+    {% if data_master.has_video %}
+    <div class="weui-flex">
+        <div class="weui-flex__item">
+        <center>
+        <div  class="prism-player" id="J_prismPlayer" ></div>
+        <script>
+            var player = new Aliplayer({
+            id: 'J_prismPlayer',
+            width: '100%',
+            autoplay: false,
+            //支持播放地址播放,此播放优先级最高
+            source : '{{data_master.video_url}}',
+            cover: '{{data_master.video_cover_url}}',  
+            },function(player){
+                console.log('播放器创建好了。')
+           });
+        </script>
         </center>
         </div>
     </div>
     {% endif %}
+
 
     <div style="padding-left:10px;padding-right:10px;">
 
@@ -59,64 +97,52 @@
             </div>
         {% endif %} 
 
+ 
+    {% if data_master.sales_on %}
 
-            <div  style="padding-top:15px" >
+    <div style="padding-top:5px;">
 
-		{% if qr_label.var1 %}
-                <div class="weui-flex">
-                    {% if qr_label.var1name %}
-                    <div class="weui-flex__item">{{qr_label.var1name}}：{{qr_label.var1}} </div>
-                    {% else %}
-                    <div class="weui-flex__item">{{data_master.var1name}}：{{qr_label.var1}} </div>
-                    {% endif %}
-                </div>
-		{% endif %}
+    {% if qr_label.has_sale %}
+
+    <p>购买时间：{{qr_label.mark_date |date:'Y-m-d'}}</p>
+
+    {% endif %}
+    
+    {% if  not qr_label.has_sale %}
+         <form  method="post" enctype="multipart/form-data">
+
+         {% csrf_token %}
+              <div class="weui-cells weui-cells_form"> 
+                 <div class="weui-cell"> 
+                     <div class = "weui-cell__hd">
+                    序列号:
+                    </div>
+                     <div class="weui-cell__bd"> 
+                         <input class="weui-input" placeholder="序列号" type="text" name="equip_no"></input> 
+                     </div> 
+                 </div> 
+             </div> 
+
+             <div class="weui-cell"> 
+                 <div class="weui-cell__bd"> 
+                         <input name="img" class="weui-input" type="file" accept="image/*"  placeholder="请选择图片"></input> 
+                    </div> 
+             </div> 
 
 
-		{% if qr_label.var2 %}
-                <div class="weui-flex">
-                    {% if qr_label.var2name %}
-                    <div class="weui-flex__item">{{qr_label.var2name}}：{{qr_label.var2}} </div>
-                    {% else %}
-                    <div class="weui-flex__item">{{data_master.var2name}}：{{qr_label.var2}} </div>
-                    {% endif %}
+            <div class="weui-btn-area" style="padding-top:20px">
 
-                </div>
-		{% endif %}
-
-		{% if qr_label.var3 %}
-                <div class="weui-flex">
-                    {% if qr_label.var3name %}
-                    <div class="weui-flex__item">{{qr_label.var3name}}：{{qr_label.var3}} </div>
-                    {% else %}
-                    <div class="weui-flex__item">{{data_master.var3name}}：{{qr_label.var3}} </div>
-                    {% endif %}
-                </div>
-		{% endif %}
-
-		{% if qr_label.var4 %}
-                <div class="weui-flex">
-                    {% if qr_label.var4name %}
-                    <div class="weui-flex__item">{{qr_label.var4name}}：{{qr_label.var4}} </div>
-                    {% else %}
-                    <div class="weui-flex__item">{{data_master.var4name}}：{{qr_label.var4}} </div>
-                    {% endif %}
-                </div>
-		{% endif %}
-
-		{% if qr_label.var5 %}
-                <div class="weui-flex">
-                    {% if qr_label.var5name %}
-                    <div clas5="weui-flex__item">{{qr_label.var5name}}：{{qr_label.var5}} </div>
-                    {% else %}
-                    <div class="weui-flex__item">{{data_master.var5name}}：{{qr_label.var5}} </div>
-                    {% endif %}
-                </div>
-		{% endif %}
+                <input  name ="sale" type ="hidden" value = "sale" />
+                <input type="submit" value="出厂计时" class="weui-btn weui-btn_primary">
             </div>
 
+            </form>
+    
+    {% endif %}
 
+    {% endif %}
 </div>
+       
 
     {% if data_master.feedback_show %}
 
@@ -186,7 +212,7 @@
 {% block script %}
 
 
-<script src="https://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
 
 <script>
 
