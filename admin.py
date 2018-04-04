@@ -72,7 +72,8 @@ class DMPAdmin(SelectModelAdmin):
         'sales_on',
         'template',
         'fd_url',
-        'grl_url',
+        'grl_url', 
+        ('var1name', 'var1', 'var2name', 'var2', 'var3name','var3', 'var4name', 'var4', 'var5name', 'var5')
         )
     readonly_fields = ('master_uuid','fd_url','grl_url')
 
@@ -82,8 +83,8 @@ class QrLabelAdmin(SelectModelAdmin):
     search_fields = ('qrcode','master_code',)
     list_display = ('qrcode','data_master','remark','format_url' ,'qr_url')
     fields = ('label_uuid','qrcode','label_code','master_code','data_master','remark','mark_date','equip_no','equip_img_url','format_url','qr_url',
-               'var1name', 'var1', 'var2name', 'var2', 'var3name', 
-               'var3', 'var4name', 'var4', 'var5name', 'var5')
+               ('var1name', 'var1', 'var2name', 'var2', 'var3name', 
+               'var3', 'var4name', 'var4', 'var5name', 'var5'))
     readonly_fields=('label_uuid','format_url','qr_url','master_code',)
 
 class LabelFeedBackAdmin(SelectModelAdmin):
