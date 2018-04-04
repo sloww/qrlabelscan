@@ -62,6 +62,13 @@
 
             <div  style="padding-top:15px" >
 
+		{% if qr_label.var1 %}
+                <div class="weui-flex">
+                    <div class="weui-flex__item">{{qr_label.var1name}}：{{qr_label.var2}} </div>
+                </div>
+		{% endif %}
+
+
 		{% if qr_label.var2 %}
                 <div class="weui-flex">
                     <div class="weui-flex__item">{{qr_label.var2name}}：{{qr_label.var2}} </div>
