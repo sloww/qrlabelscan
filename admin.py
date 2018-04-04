@@ -53,7 +53,7 @@ class DataMasterAdmin(SelectModelAdmin):
         'has_fix',
         'label_list2',
         )
-    readonly_fields = ('master_uuid','fd_url','grl_url','label_list2','master_code',)
+    readonly_fields = ('master_uuid','fd_url','grl_url','label_list2',)
     list_per_page = 20
 
 class DMPAdmin(SelectModelAdmin):

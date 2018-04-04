@@ -61,6 +61,67 @@ class DataMaster(models.Model):
         verbose_name='是否固定（不可以删除!)',
         )
 
+    var1name=models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var1 = models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var2name=models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var2 = models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var3name=models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var3 = models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var4name=models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var4 = models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var5name = models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+        )
+
+    var5 = models.CharField(
+        max_length=200,
+        default="",
+        blank=True,
+    )
+
+
     def fix(self):
         r = ''
         if self.has_fix:
