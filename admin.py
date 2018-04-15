@@ -52,6 +52,7 @@ class DataMasterAdmin(SelectModelAdmin):
         'grl_url',
         'has_fix',
         'label_list2',
+        ('var1name', 'var1', 'var2name', 'var2', 'var3name','var3', 'var4name', 'var4', 'var5name', 'var5')
         )
     readonly_fields = ('master_uuid','fd_url','grl_url','label_list2',)
     list_per_page = 20
